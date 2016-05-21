@@ -26,6 +26,8 @@ public class KainosController {
 
     @RequestMapping("/")
     public String index() {
+        final int firstColumnLength = 0;
+    	final int secondColumnLength = 6;
 
     	Connection c = null;
     	DatabaseConnector con = new HSQLDBConnector();
@@ -36,9 +38,6 @@ public class KainosController {
  			e.printStackTrace();
 		}
  
-    	final int firstColumnLength = 0;
-    	final int secondColumnLength = 6;
-     	
      	String tableName = "kainos";
      	String[] columnNames = {"mydate", "val"};
      	DataTypes[] types = {DataTypes.DATE, DataTypes.CHAR};
@@ -61,15 +60,15 @@ public class KainosController {
      	List<Exchange> lista = new ArrayList<>();
      	int i = 0;
      	
-     	ext.next(); // skip first row as it contains column name
+     	ext.next(); // skip first row 'cause it contains column name
      	while(ext.hasNext()) {
      			Exchange ex = ext.next();
-     			ex.getRow()[0] = DateConverter.replace((String)ex.getRow()[0], '/', '-');
+     			ex.getRow()[0] = DateConverter.replace((String)ex.getRow()[0]);
      		    repo.insertRow((String[])ex.getRow());
      			lista.add(ex);
      	}     	
      	
-     	List<ArrayList<String>> lista2 = repo.selectWhereDateMatches("1998-01-05", "1998-03-24");
+     	List<ArrayList<String>> lista2 = repo.selectWhereDateMatches("1998-01-05", "1998-01-10");
         return lista2.toString(); //repo.select(columnNames).toString();
     }
 
