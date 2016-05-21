@@ -47,7 +47,7 @@ public class KainosController {
  			br = new BufferedReader(new FileReader(path));
  		} catch (FileNotFoundException e1) {
  			// TODO Auto-generated catch block
- 			e1.printStackTrace();
+ 			e1.printStackTrace(); 
  		}
      	
      	CSVExchangeExtruder ext = new CSVExchangeExtruder(br);
