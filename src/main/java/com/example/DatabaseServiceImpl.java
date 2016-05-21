@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.example.model.Exchange;
 import com.example.utils.CSVExchangeExtruder;
@@ -82,8 +81,5 @@ public class DatabaseServiceImpl implements DatabaseService {
 	    this.repo = new SQLRepository(c, myTable);
    	    repo.createTableInsideDatabase();
    	    
-   	    
-   	    
-
 	}
 }
