@@ -1,5 +1,6 @@
 package com.example;
 
+
 public class SQLTable {
 	
 	private String tableName;

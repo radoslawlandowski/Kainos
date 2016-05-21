@@ -18,7 +18,17 @@ public class CSVExchangeExtruder implements Iterator<Exchange> {
 	public CSVExchangeExtruder(BufferedReader myReader) { 
 		reader = myReader; 
 	};
+	
+	public CSVExchangeExtruder() {}
  
+	public BufferedReader getReader() {
+		return reader;
+	}
+
+	public void setReader(BufferedReader reader) {
+		this.reader = reader;
+	}
+
 	@Override
 	public boolean hasNext() {
 		boolean result = false;

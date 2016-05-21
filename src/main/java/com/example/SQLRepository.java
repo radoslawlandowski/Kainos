@@ -11,7 +11,6 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public class SQLRepository {
 	
 		private static final Logger logger = LogManager.getLogger(SQLRepository.class);
@@ -25,6 +24,20 @@ public class SQLRepository {
 			this.table = table;
 		}
 		
+		
+		
+		public SQLTable getTable() {
+			return table;
+		}
+
+
+
+		public void setTable(SQLTable table) {
+			this.table = table;
+		}
+
+
+
 		private void rollTransactionBack(Connection con) {
 		        if (con != null) {
 		            try {
