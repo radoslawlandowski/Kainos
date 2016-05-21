@@ -258,6 +258,32 @@ public class SQLRepository {
 			return data;
 		}
 		
+		public List<ArrayList<String>> selectWhereDateMatches(String startDate, String endDate) throws IllegalArgumentException {
+			List<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String dateColumnName = table.getColumnNames()[0];
+			
+			String query = "SELECT * FROM " + table.getTableName() + " WHERE " + dateColumnName +" BETWEEN ? AND ?;";
+			try {
+				pstmt = c.prepareStatement(query);
+				pstmt.setString(1, startDate);
+				pstmt.setString(2, endDate);
+
+				rs = pstmt.executeQuery();
+				data = receiveData(rs, table.getColumnNames());
+				logger.info("Select query on table: \"" + table.getTableName() + "\" performed successfully!");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				rollTransactionBack(c);
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+		
+		return data;
+		}
+		
 		
 		public List<ArrayList<String>> selectWhere(String whereColumn, String whereValue, String... columnName) throws IllegalArgumentException {
 			List<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
