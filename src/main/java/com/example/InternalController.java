@@ -19,33 +19,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.utils.MoneyCalculator;
 
 @Controller
-public class KainosController {
+public class InternalController {
 	
-	 private static final Logger logger = LogManager.getLogger(KainosController.class);
+	 private static final Logger logger = LogManager.getLogger(InternalController.class);
 	
 	@Autowired
 	DatabaseService service;
 
-    @RequestMapping("/")
-    public String index() {
-     	service.initializeDatabase();
-    	
+    
+    @RequestMapping(value = "/dataExchange", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<ArrayList<String>>> returnText(@RequestParam(value = "startdate", required = true) String startDate,
+			@RequestParam(value = "enddate", required = true) String endDate) {
+    	service.initializeDatabase();
 		String path = "/home/radek/Documents/newWorkspace/Kainos/src/main/resources/data.csv";
-		
     	service.insertDataFromFile(path);
-        
-    	MoneyCalculator calc = new MoneyCalculator();
-   
-    	List<ArrayList<String>> compared = calc.compareIncome(service.selectWhereDataMatches("1998-01-05", "1998-03-23"), new BigDecimal(10000), new BigDecimal(101));
     	
-    	return compared.toString();
+    	List<ArrayList<String>> list = service.selectWhereDataMatches(startDate, endDate);
+    	ResponseEntity<List<ArrayList<String>>> response = new ResponseEntity<>(list, HttpStatus.OK);
+    	return response;
     }
-    
-    @RequestMapping("/greeting")
-    public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
-        return "mainIndex";
-    }
-
-    
-
 }
