@@ -8,54 +8,47 @@ import java.util.List;
 public class MoneyCalculator {
 
 	public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
-
-	public MoneyCalculator() {
-	 
-	}
 	
 	private BigDecimal calculateSingleIncome(BigDecimal inputValue, BigDecimal percentage) {
 		BigDecimal val = inputValue.multiply(percentage).divide(ONE_HUNDRED);
 		return val;
 	}
 	
-	public List<ArrayList<String>> calculateIncome(List<ArrayList<String>> data, BigDecimal inputValue) {
+	public List<ArrayList<String>> compareIncome(List<ArrayList<String>> data, BigDecimal inputValue, BigDecimal depPercentage) {
 		
 		List<ArrayList<String>> outputList = new ArrayList<ArrayList<String>>();
 		
 		int listSize = data.size();
+		
+		BigDecimal fundInputValue = inputValue;
+		BigDecimal depositInputValue = inputValue;
+		
+		BigDecimal fundPercentage = null;
+		BigDecimal depositPercentage = depPercentage;
+		
+		BigDecimal fundOutputValue = null;
+		BigDecimal depositOutputValue = null;
+		
 		for(int i = 0 ; i < listSize ; i++) {
-			String v = data.get(i).get(1);
-			v = v.replaceAll("\\s+",""); // remove whitespaces
-			BigDecimal val = new BigDecimal(v);
-			BigDecimal percentage = val;
-			BigDecimal outputValue = calculateSingleIncome(inputValue, percentage);
-			outputValue = outputValue.setScale(2, RoundingMode.HALF_EVEN);
-			inputValue = outputValue;
+			String val = data.get(i).get(1);
+			val = val.replaceAll("\\s+",""); // remove whitespaces if no decimal part
+			fundPercentage = new BigDecimal(val);
 			
-			ArrayList<String> row = new ArrayList<>();
+			fundOutputValue = calculateSingleIncome(fundInputValue, fundPercentage);
+			fundOutputValue = fundOutputValue.setScale(2, RoundingMode.HALF_EVEN);
+			fundInputValue = fundOutputValue;
+			
+			depositOutputValue = calculateSingleIncome(depositInputValue, depositPercentage);
+			depositOutputValue = depositOutputValue.setScale(2, RoundingMode.HALF_EVEN);
+			depositInputValue = depositOutputValue;
+			
+			ArrayList<String> row = new ArrayList<>(3); // == 3, because: date, fundOutput, depositOutput
 			row.add(data.get(i).get(0));
-			row.add(outputValue.toString());
+			row.add(fundOutputValue.toString());
+			row.add(depositOutputValue.toString());
 			outputList.add(row);
 		}
 		return outputList;
-	}
-	
-	public List<ArrayList<String>> calculateIncomeConstantPercentage(List<ArrayList<String>> data, BigDecimal inputValue, BigDecimal percentage) {
-		
-		List<ArrayList<String>> outputList = new ArrayList<ArrayList<String>>();
-		
-		int listSize = data.size();
-		for(int i = 0 ; i < listSize ; i++) {
-			BigDecimal outputValue = calculateSingleIncome(inputValue, percentage);
-			outputValue = outputValue.setScale(2, RoundingMode.HALF_EVEN);
-			inputValue = outputValue;
-			ArrayList<String> row = new ArrayList<>();
-			row.add(data.get(i).get(0));
-			row.add(outputValue.toString());
-			outputList.add(row);
-		}
-		return outputList;
-
 	}
 	
 }
