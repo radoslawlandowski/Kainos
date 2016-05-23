@@ -2,57 +2,66 @@
 <html>
 <head>
 <style>
+h2 {
+	border-style: ridge;
+}
 
-h2 {border-style: ridge;}
-form {border-style: ridge;}
+form {
+	border-style: ridge;
+}
 
 table {
-    border-collapse: collapse;
-    width: 20%;
-    height: 100%;
+	border-collapse: collapse;
+	width: 20%;
+	height: 100%;
 }
 
 th, td {
-    text-align: left;
-    padding: 8px;
-    border: 1px solid black;
+	text-align: left;
+	padding: 8px;
+	border: 1px solid black;
 }
 
 th {
-    background-color: #4CAF50;
-    color: white;
+	background-color: #4CAF50;
+	color: white;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
 </style>
 </head>
 <body>
 
-<h2><strong>Kainos Web Application</strong></h2>
+	<h2>
+		<strong>Kainos Web Application</strong>
+	</h2>
 
-<form action="javascript:getDate(document.getElementById('startingDate').value, document.getElementById('endingDate').value)">
-  Enter a date after 2001-12-31:
-  <input type="date" name="bday" min="2001-12-31" max="2012-01-02" id=startingDate><br>
-  Enter a date before 2012-01-02:
-  <input type="date" name="bday" min="2001-12-31" max="2012-01-02" id=endingDate><br>
-  <input type="submit"  value="Submit">
-</form>
-
-
-<div style="overflow-y:auto;">
-  <table id="myTable">
- 
-    <tr>
-      <th>Date</th>
-      <th>Value</th>
-    </tr>
-    <tr>
-
-  </table>
-</div>
+	<form
+		action="javascript:getData(document.getElementById('startingDate').value, document.getElementById('endingDate').value)">
+		Set start date <input type="date" name="bday"
+			min="1998-01-05" max="2016-05-12" id=startingDate><br>
+		Set end date <input type="date" name="bday"
+			min="1998-01-05" max="2016-05-12" id=endingDate><br> <input
+			type="submit" value="Submit">
+	</form>
 
 
-<script src="js/dataExchange.js"></script>
+	<div style="overflow-y: auto;">
+		<table id="myTable">
+
+			<tr>
+				<th>Date</th>
+				<th>Value</th>
+			</tr>
+			<tr>
+		</table>
+	</div>
+
+	<p id="demo">This is a demonstration.</p>
+
+	<script src="js/dataExchange.js"></script>
 
 </body>
 </html>

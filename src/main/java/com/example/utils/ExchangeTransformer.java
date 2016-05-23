@@ -29,6 +29,20 @@ public class ExchangeTransformer {
         return sqlDate;
 	}
 	
+	public static Date getDateFromHtml(String dateAsString) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date = null;
+		try {
+			date = sdf.parse(dateAsString);
+		} catch (ParseException e) {
+			logger.error("The date cannot be parsed. Check your string format. [Should be: dd/mm/yyyy]");
+			e.printStackTrace();
+		}
+        java.sql.Date sqlDate = new Date(date.getTime()); 
+
+        return sqlDate;
+	}
+	
 	public static BigDecimal getBigDecimal(String valueAsString) {
 		BigDecimal value = new BigDecimal(valueAsString.replaceAll("\\s+","")).setScale(2, RoundingMode.HALF_EVEN);
 		return value;

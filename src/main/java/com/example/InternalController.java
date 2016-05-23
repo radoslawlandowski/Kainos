@@ -17,19 +17,23 @@ import com.example.utils.ExchangeTransformer;
 
 @Controller
 public class InternalController {
-	
+
 	private static final Logger logger = LogManager.getLogger(InternalController.class);
 	
+	private static final String START_DATE = "1998-01-05";
+	private static final String END_DATE = "2016-05-12";
+
 	@Autowired
 	DatabaseService service;
-    
-    @RequestMapping(value = "/dataExchange", method = RequestMethod.GET)
-    public @ResponseBody List<Exchange> returnText(@RequestParam(value = "startdate", required = false) String startDate,
-			@RequestParam(value = "enddate", required = false) String endDate) {
-    	Date start = ExchangeTransformer.getDate("21/02/2003");
-    	Date end = ExchangeTransformer.getDate("04/03/2003");
-    	List<Exchange> ex = service.selectWhereDate(start, end);
-     	return ex;
-    }
-    
+
+	@RequestMapping(value = "/dataExchange", method = RequestMethod.GET)
+	public @ResponseBody List<Exchange> returnText(
+			@RequestParam(value = "startdate", required = true, defaultValue = START_DATE) String startDate,
+			@RequestParam(value = "enddate", required = true, defaultValue = END_DATE) String endDate) {
+		Date start = ExchangeTransformer.getDateFromHtml(startDate);
+		Date end = ExchangeTransformer.getDateFromHtml(endDate);
+		List<Exchange> ex = service.selectWhereDate(start, end);
+		return ex;
+	}
+
 }
