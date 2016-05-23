@@ -56,8 +56,20 @@
 	    <artifactId>jstl</artifactId>
 	    <scope>provided</scope>
 	</dependency>
- 
+	
+	<!-- http://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
+<dependency>
+    <groupId>org.codehaus.jackson</groupId>
+    <artifactId>jackson-mapper-asl</artifactId>
+    <version>1.9.13</version>
+</dependency>
 
+
+	   <dependency>
+	   	<groupId>org.json</groupId>
+	   	<artifactId>json</artifactId>
+	   	<version>20151123</version>
+	   </dependency>
 	</dependencies>
 	
 	<build>

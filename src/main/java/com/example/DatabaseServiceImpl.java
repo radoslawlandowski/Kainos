@@ -33,7 +33,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 	
 	@Override
-	public void insertDataFromFileRevisited(String path) {
+	public void insertDataFromFile(String path) {
    	    BufferedReader br = null;
    	 	try {
 			br = new BufferedReader(new FileReader(path));
@@ -51,7 +51,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 
 	@Override
-	public List<Exchange> selectAllRevisited() {
+	public List<Exchange> selectAll() {
 		List<Exchange> result;
 		String[] allColumns = repo.getTable().getColumnNames();
 		result = repo.selectRevisited(allColumns);
@@ -59,7 +59,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 
 	@Override
-	public List<Exchange> selectWhereDateMatchesRevisited(Date startDate, Date endDate) {
+	public List<Exchange> selectWhereDate(Date startDate, Date endDate) {
 		List<Exchange> list;
 		list = repo.selectWhereDateMatchesRevisited(startDate, endDate);
 		return list;

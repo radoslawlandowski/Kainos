@@ -41,8 +41,9 @@ public class Exchange {
 
 	@Override
 	public String toString() {
-		return Arrays.toString(row);
+		return "Exchange [row=" + Arrays.toString(row) + "]";
 	}
-	
+
+
 	
 }

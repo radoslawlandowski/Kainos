@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.model.Exchange;
 import com.example.utils.ExchangeTransformer;
 import com.example.utils.MoneyCalculator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller // should be Controller
 public class KainosController {
@@ -30,17 +32,30 @@ public class KainosController {
     	
 		String path = "/home/radek/Documents/newWorkspace/Kainos/src/main/resources/data.csv";
 		
-    	service.insertDataFromFileRevisited(path);
+    	service.insertDataFromFile(path);
         
     	MoneyCalculator calc = new MoneyCalculator();
     	Date start = ExchangeTransformer.getDate("21/02/2003");
     	Date end = ExchangeTransformer.getDate("21/03/2003");
-    	List<Exchange> compared = calc.compareIncomeRevisited(service.selectWhereDateMatchesRevisited(start, end), new BigDecimal(10000), new BigDecimal(101));
+    	List<Exchange> compared = calc.compareIncomeRevisited(service.selectWhereDate(start, end), new BigDecimal(10000), new BigDecimal(101));
     	
     	
-    	String sth = service.selectWhereDateMatchesRevisited(start, end).toString();
-    	String sth2 = service.selectAllRevisited().toString();
-    	return sth2.toString();
+    	String sth = service.selectWhereDate(start, end).toString();
+    	String sth2 = service.selectAll().toString();
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+    	List<Exchange> ex = service.selectAll();
+
+    	String jsonInString = null;
+		try {
+			jsonInString = mapper.writeValueAsString(ex);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    	String result = jsonInString;
+    	return "mainIndex";
     }
     
     @RequestMapping("/greeting")

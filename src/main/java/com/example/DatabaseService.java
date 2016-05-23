@@ -7,8 +7,8 @@ import com.example.model.Exchange;
 
 public interface DatabaseService {
 	void initializeDatabase();
-	void insertDataFromFileRevisited(String path);
-	List<Exchange> selectAllRevisited();
-	List<Exchange> selectWhereDateMatchesRevisited(Date startDate, Date endDate);
+	void insertDataFromFile(String path);
+	List<Exchange> selectAll();
+	List<Exchange> selectWhereDate(Date startDate, Date endDate);
 	
 }

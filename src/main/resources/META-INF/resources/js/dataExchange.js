@@ -22,14 +22,40 @@ function insertMultipleRows() {
 	}
 }
 
-function getDate(startdate, enddate) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (xhttp.readyState == 4 && xhttp.status == 200) {
-     document.getElementById("myTable").innerHTML = xhttp.responseText;
-     insertRow();
-    }
-  };
-  xhttp.open("GET", "dataExchange?startdate="+startdate+"&enddate="+enddate, true);
-  xhttp.send();
+function func(arr) {
+	  var v = arr[1].row[1];
+	  insertRow(arr[1].row[1], arr[1].row[2]);
+	  insertRow(10,10);
+		  
+	}
+
+function testing() {
+	insertRow(15,15);
 }
+  
+  function getDate(startdate, enddate) {
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+	  	insertRow(1,2);
+	  	var pre = xhttp.responseText;
+	    obj = JSON.parse(pre);
+	  	alert(obj[0].row[0]);
+	  	for(var i in obj)
+	  	{
+	  	     var id = obj[i].row[0];
+	  	     var name = obj[i].row[1];
+	  	     
+	  	     insertRow(id, name);
+	  	}
+
+  
+	    }
+	  };
+	  xhttp.open("GET", "dataExchange?startdate="+startdate+"&enddate="+enddate, true);
+	  xhttp.send();
+	}
+ 
+  
+  
