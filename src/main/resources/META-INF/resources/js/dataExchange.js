@@ -16,6 +16,19 @@ function insertRow(date, value) {
 	cell2.innerHTML = value;
 }
 
+function insertRowThree(date, value, deposit) {
+	var table = document.getElementById("myTable");
+	var row = table.insertRow(1);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+
+	cell1.innerHTML = date;
+	cell2.innerHTML = value;
+	cell3.innerHTML = deposit;
+
+}
+
 function insertMultipleRows() {
 	for (i = 0; i < 5; i++) {
 		insertRow(123, 32);
@@ -45,11 +58,9 @@ function getData(startdate, enddate) {
 			var pre = xhttp.responseText;
 			obj = JSON.parse(pre);
 			// alert(obj[0].row[0]); !!!!!!!!! REMEMBER THIS PATTERN
-			document.getElementById("demo").innerHTML = document.getElementById('startingDate').value;
 			for ( var i in obj) {
 				var id = obj[i].row[0];
 				var name = obj[i].row[1];
-
 				insertRow(id, name);
 			}
 
@@ -59,3 +70,37 @@ function getData(startdate, enddate) {
 			+ enddate, true);
 	xhttp.send();
 }
+function compare() {
+	var startDate = document.getElementById('startingDateCompare').value;
+	var endDate = document.getElementById('endingDateCompare').value;
+	document.getElementById('button').value = "Changed";
+	var initialInput = document.getElementById('initialInputCompare').value;
+	var percentage = document.getElementById('percentageCompare').value;
+	
+	var table = document.getElementById("myTableCompare");
+	while(table.rows.length > 1) {
+		  table.deleteRow(1);
+		}
+	
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200) {
+			var pre = xhttp.responseText;
+			obj = JSON.parse(pre);
+			// alert(obj[0].row[0]); !!!!!!!!! REMEMBER THIS PATTERN
+			for ( var i in obj) {
+				var id = obj[i].row[0];
+				var name = obj[i].row[1];
+				var deposit = obj[i].row[2];
+
+				insertRowThree(id, name, deposit);
+			}
+
+		}
+	};
+	xhttp.open("GET", "dataCompare?startdate=" + startDate + "&enddate="+ enddate + "&initialInput=" + initialInput + "&percentage=" + percentage, true);
+	xhttp.send();
+}
+	
+
+

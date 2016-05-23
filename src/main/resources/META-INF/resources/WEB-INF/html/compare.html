@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+h2 {
+	border-style: ridge;
+}
+
+form {
+	border-style: ridge;
+}
+
+table {
+	border-collapse: collapse;
+	width: 20%;
+	height: 100%;
+}
+
+th, td {
+	text-align: left;
+	padding: 8px;
+	border: 1px solid black;
+}
+
+th {
+	background-color: #4CAF50;
+	color: white;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
+</style>
+
+</head>
+<body>
+
+	<h2>
+		<strong>Kainos Web Application</strong>
+	</h2>
+
+	<form
+		action="javascript:compare()">
+		Set start date <input type="date" name="bday" min="1998-01-05"
+			max="2016-05-12" id=startingDateCompare><br> Set end date <input
+			type="date" name="bday" min="1998-01-05" max="2016-05-12"
+			id=endingDateCompare><br> Wklad poczatkowy<br> <input
+			type="text" name="wklad" id="initialInputCompare"><br>
+		Oprocentowanie lokaty<br> <input type="text"
+			name="oprocentowanie" id="percentageCompare"> <input type="submit"
+			value="Submit" id="button">
+	</form>
+
+	<div style="overflow-y: auto;">
+		<table id="myTableCompare">
+
+			<tr>
+				<th>Date</th>
+				<th>FundValue</th>
+				<th>DepositValue</th>
+			</tr>
+			<tr>
+		</table>
+	</div>
+<body>
+</body>
+
+<script src="js/dataExchange.js"></script>
+
+
+</body>
+</html>
