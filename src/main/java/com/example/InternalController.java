@@ -1,22 +1,17 @@
 package com.example;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.example.utils.MoneyCalculator;
 
 @Controller
 public class InternalController {
@@ -33,8 +28,8 @@ public class InternalController {
 			@RequestParam(value = "enddate", required = true) String endDate) {
 
     	
-    	List<ArrayList<String>> list = service.selectWhereDataMatches(startDate, endDate);
-    	ResponseEntity<List<ArrayList<String>>> response = new ResponseEntity<>(list, HttpStatus.OK);
-    	return response;
+    	//List<ArrayList<String>> list = service.selectWhereDataMatches(startDate, endDate);
+    	//ResponseEntity<List<ArrayList<String>>> response = new ResponseEntity<>(list, HttpStatus.OK);
+    	return null;
     }
 }
