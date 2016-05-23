@@ -31,9 +31,7 @@ public class InternalController {
     @ResponseBody
     public ResponseEntity<List<ArrayList<String>>> returnText(@RequestParam(value = "startdate", required = true) String startDate,
 			@RequestParam(value = "enddate", required = true) String endDate) {
-    	service.initializeDatabase();
-		String path = "/home/radek/Documents/newWorkspace/Kainos/src/main/resources/data.csv";
-    	service.insertDataFromFile(path);
+
     	
     	List<ArrayList<String>> list = service.selectWhereDataMatches(startDate, endDate);
     	ResponseEntity<List<ArrayList<String>>> response = new ResponseEntity<>(list, HttpStatus.OK);

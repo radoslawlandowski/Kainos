@@ -1,6 +1,9 @@
 package com.example;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +12,8 @@ import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Repository;
+
+import com.example.model.Exchange;
 
 public class SQLRepository {
 	
@@ -24,19 +28,13 @@ public class SQLRepository {
 			this.table = table;
 		}
 		
-		
-		
 		public SQLTable getTable() {
 			return table;
 		}
 
-
-
 		public void setTable(SQLTable table) {
 			this.table = table;
 		}
-
-
 
 		private void rollTransactionBack(Connection con) {
 		        if (con != null) {
@@ -155,6 +153,43 @@ public class SQLRepository {
 			
 		}
 		
+		public void insertRowRevisited(Object[] data) throws IllegalArgumentException {
+			
+			int numberOfColumns = table.getNumberOfColumns();
+			String tableName = table.getTableName();
+			
+			if(data.length != numberOfColumns) {
+				logger.error("Wrong amount of arguments for table: \"" + table.getTableName() + "\"!");
+				throw new IllegalArgumentException("Wrong amount of arguments for table: \"" + table.getTableName() + "\"!");
+			}
+			
+			String insertIntro = "INSERT INTO " + tableName + " VALUES (";
+			StringBuilder b = new StringBuilder(insertIntro);
+			for(@SuppressWarnings("unused") Object item : data) {
+				b.append("?, ");
+			}
+			b.delete(b.length()-2, b.length());
+			b.append(");");
+			
+			String insertString = b.toString();
+			
+			PreparedStatement pstmt = null;
+			try {
+				c.setAutoCommit(false);
+				pstmt = c.prepareStatement(insertString);
+				pstmt.setDate(1, (Date)data[0]);
+				pstmt.setBigDecimal(2, (BigDecimal)data[1]);
+				pstmt.executeUpdate();
+				c.commit();
+			} catch (SQLException e ) {
+		        e.printStackTrace();
+		        rollTransactionBack(c);
+		    } finally {
+		    	close(pstmt);
+		    }
+			
+		}
+		
 		private List<ArrayList<String>> receiveData(ResultSet rs, String... columnName) {
 			
 			List<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
@@ -176,6 +211,29 @@ public class SQLRepository {
 				close(rs);
 			}
 			
+			return rows;
+		}
+		
+		private List<Exchange> receiveDataRevisited(ResultSet rs, String... columnName) {
+			
+			List<Exchange> rows = new ArrayList<Exchange>();
+			
+			byte datePos = 0;
+			byte valPos = 1;
+			
+				try {
+				while (rs.next()) {
+					Date date = rs.getDate(columnName[datePos]);
+					BigDecimal value = rs.getBigDecimal(columnName[valPos]).setScale(2, RoundingMode.HALF_EVEN);
+					Object[] container = {date, value};
+					Exchange row = new Exchange(container);
+					rows.add(row);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+			}
 			return rows;
 		}
 		
@@ -242,24 +300,24 @@ public class SQLRepository {
 			return data;
 		}
 		
-		
-		public List<ArrayList<String>> selectAndOrderBy(String orderBy, String... columnName) {
-			List<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+public List<Exchange> selectRevisited(String... columnName) throws IllegalArgumentException {
+			
+			List<Exchange> data = new ArrayList<Exchange>();
 			int numberOfColumns = table.getNumberOfColumns();
 			
 			if(columnName.length > numberOfColumns) {
 				logger.error("Wrong amount of arguments for table: \"" + table.getTableName() + "\"!");
 				throw new IllegalArgumentException("Wrong amount of arguments for table: \"" + table.getTableName() + "\"!");
 			} else {
+				
 				String selectString = selectString(columnName);
-				selectString = selectAndOrderByString(selectString, orderBy);
 				PreparedStatement pstmt = null;
 				ResultSet rs = null;
 				
 				try {
 					pstmt = c.prepareStatement(selectString);
 					rs = pstmt.executeQuery();
-					data = receiveData(rs, columnName);
+					data = receiveDataRevisited(rs, columnName);
 					logger.info("Select query on table: \"" + table.getTableName() + "\" performed successfully!");
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -271,6 +329,7 @@ public class SQLRepository {
 			}
 			return data;
 		}
+
 		
 		public List<ArrayList<String>> selectWhereDateMatches(String startDate, String endDate) throws IllegalArgumentException {
 			List<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
@@ -298,83 +357,33 @@ public class SQLRepository {
 		return data;
 		}
 		
-		
-		public List<ArrayList<String>> selectWhere(String whereColumn, String whereValue, String... columnName) throws IllegalArgumentException {
-			List<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
-			int numberOfColumns = table.getNumberOfColumns();
-			
-			if(columnName.length > numberOfColumns) {
-				logger.error("Wrong amount of arguments for table: \"" + table.getTableName() + "\"!");
-				throw new IllegalArgumentException("Wrong amount of arguments for table: \"" + table.getTableName() + "\"!");
-			} else {
-				
-				String selectString = selectString(columnName);
-				String whereString = selectWhereString(selectString, whereColumn); //appending WHERE-piece of query
-				
-				PreparedStatement pstmt = null;
-				ResultSet rs = null;
-				
-				try {
-					pstmt = c.prepareStatement(whereString);
-					pstmt.setString(1, whereValue);
-					rs = pstmt.executeQuery();
-					data = receiveData(rs, columnName);
-					logger.info("Select query on table: \"" + table.getTableName() + "\" performed successfully!");
-				} catch (SQLException e) {
-					e.printStackTrace();
-					rollTransactionBack(c);
-				} finally {
-					close(pstmt);
-					close(rs);
-				}
-			}
-			return data;
-		}
-		 /* UPDATE Customers
-			SET ContactName='Alfred Schmidt', City='Hamburg'
-			WHERE CustomerName='Alfreds Futterkiste'; */
-		
-		public void update(String whereColumn, String whereValue, String[]... data) {
-			int numberOfColumns = table.getNumberOfColumns();
-			
-			if(data.length > numberOfColumns) {
-				logger.error("Wrong amount of arguments for table: \"" + table.getTableName() + "\"!");
-				throw new IllegalArgumentException("Wrong amount of arguments for table: \"" + table.getTableName() + "\"!");
-			} else {
-			int columnIndex = 0;
-			int valueIndex = 1;
-			String tableName = table.getTableName();
-			
-			StringBuilder sb = new StringBuilder("UPDATE ");
-			sb.append(tableName).append(" SET ");
-			for(int i = 0 ; i < data.length ; i++) {
-				sb.append(data[i][columnIndex]).append("=?, ");
-			}
-			sb.delete(sb.length()-2, sb.length());
-			sb.append(" WHERE ").append(whereColumn).append("=?;");
-			
-			String updateString = sb.toString();
-			
+		public List<Exchange> selectWhereDateMatchesRevisited(Date startDate, Date endDate) throws IllegalArgumentException {
+			List<Exchange> data = new ArrayList<Exchange>();
 			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String dateColumnName = table.getColumnNames()[0];
+			
+			String query = "SELECT * FROM " + table.getTableName() + " WHERE " + dateColumnName +" BETWEEN ? AND ?;";
 			try {
-				c.setAutoCommit(false);
-				pstmt = c.prepareStatement(updateString);
-				int i = 0; /* int i used also outside the loop for "where" argument */
-				for(; i < data.length ; i++) {
-					pstmt.setString(i+1, data[i][valueIndex]);
-				} 
-				pstmt.setString(i+1, whereValue);
-				pstmt.executeUpdate();
-				c.commit();
-				logger.info("Row updated in \"" + tableName + "\"!");
-			} catch (SQLException e ) {
-		        e.printStackTrace();
-		        rollTransactionBack(c);
-		    } finally {
-		    	close(pstmt);
-		    }
+				pstmt = c.prepareStatement(query);
+				pstmt.setDate(1, startDate);
+				pstmt.setDate(2, endDate);
+
+				rs = pstmt.executeQuery();
+				data = receiveDataRevisited(rs, table.getColumnNames());
+				logger.info("Select query on table: \"" + table.getTableName() + "\" performed successfully!");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				rollTransactionBack(c);
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+		
+		return data;
 		}
- 	}
+
+		
 
 		
 }
