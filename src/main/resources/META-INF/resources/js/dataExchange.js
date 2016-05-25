@@ -64,7 +64,7 @@ function getData() {
 		if (xhttp.readyState == 4 && xhttp.status == 200) {
 			var obj = JSON.parse(xhttp.responseText);
 			insertData(obj);
-			drawChart(obj);
+			createChart(obj);
 		}
 	};
 	

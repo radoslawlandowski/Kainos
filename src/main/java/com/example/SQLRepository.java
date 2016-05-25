@@ -3,6 +3,7 @@ package com.example;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,6 +68,49 @@ public class SQLRepository {
 					e.printStackTrace();
 				}
 			}
+		}
+		
+		public boolean exists(String tableName) {			
+			DatabaseMetaData dbm;
+			boolean result = false;
+			try {
+				dbm = c.getMetaData();
+				ResultSet tables = dbm.getTables(null, null, tableName, null);
+				if (tables.next()) {
+				  result = true;
+				}
+				else {
+				  result = false;
+				}	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		   return result;
+		}
+		
+		public int countRows() {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String query = "SELECT COUNT(*) AS total FROM " + table.getTableName();
+			int rows = 0;
+			try {
+				c.setAutoCommit(false);
+				pstmt = c.prepareStatement(query);
+		        rs = pstmt.executeQuery();
+		        if (rs.last()) {
+		            rows = rs.getRow();
+		            // Move to beginning
+		            rs.beforeFirst();
+		        }
+		    } catch (SQLException e ) {
+		        e.printStackTrace();
+		        rollTransactionBack(c);
+		    } finally {
+		    	close(pstmt);
+		    	close(rs);
+		    }
+			return rows;
+
 		}
 		
 		public void createTableInsideDatabase() { 

@@ -31,14 +31,23 @@ tr:nth-child(even) {
 	background-color: #f2f2f2
 }
 </style>
-
+	<script src="js/chartLibs/RGraph.common.core.js"></script>
+	<script src="js/chartLibs/RGraph.common.dynamic.js"></script>
+	<script src="js/chartLibs/RGraph.common.tooltips.js"></script>
+	<script src="js/chartLibs/RGraph.common.effects.js"></script>
+	<script src="js/chartLibs/RGraph.line.js"></script>
+	<script src="js/generateChart.js"></script>
+	<script src="js/dataExchange.js"></script>
 </head>
 <body>
 
 	<h2>
 		<strong>Kainos Web Application</strong>
+		
 	</h2>
-	
+	<script>
+   
+</script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
 
@@ -65,9 +74,12 @@ tr:nth-child(even) {
 	</div>
 	
 	 <body>
+	 <canvas id="cvs" width="600" height="250">
+    		[No canvas support]
+		</canvas>
    </body>
-	<script src="js/generateChart.js"></script>
-	<script src="js/dataExchange.js"></script>
+   
+
  	
 
 </body>

@@ -33,6 +33,17 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 	
 	@Override
+	public boolean isInitialized() {
+		boolean result = false;
+		if(repo == null) {
+			result = false;
+		} else {
+			result = true;
+		}
+		return result;
+	}
+
+	@Override
 	public void insertDataFromFile(String path) {
    	    BufferedReader br = null;
    	 	try {

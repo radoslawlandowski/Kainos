@@ -6,40 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller // should be Controller
+@Controller 
 public class KainosController {
 	
-	 private static final Logger logger = LogManager.getLogger(KainosController.class);
+	private static final Logger logger = LogManager.getLogger(KainosController.class);
+	private static final String path = "/home/radek/Documents/newWorkspace/Kainos/src/main/resources/data.csv";
 	
 	@Autowired
 	DatabaseService service;
+	
+	private void checkDatabase() {
+		if(service.isInitialized() == false) {
+    		service.initializeDatabase();
+        	service.insertDataFromFile(path);
+        	logger.info("KainosController, Database initialized");
+    	}
+	}
 
     @RequestMapping("/")
     public String index() {
-     	service.initializeDatabase();
-		String path = "/home/radek/Documents/newWorkspace/Kainos/src/main/resources/data.csv";
-    	service.insertDataFromFile(path);
-
-    	return "mainIndex";
+    	checkDatabase();
+        return "mainIndex";
     }
     
     @RequestMapping("/compare")
     public String greeting() {
-
+    	checkDatabase();
     	return "compare";
     }
-
-    @RequestMapping("/example")
-    public String exampleController() {
-    	logger.info("Entered example COntroller");
-    	return "Goodbye";
-    }
-    
-    @RequestMapping("/d")
-    public String DebugController() {
-    	logger.info("Entered debug COntroller");
-    	return "debug";
-    }
-    
-
 }
