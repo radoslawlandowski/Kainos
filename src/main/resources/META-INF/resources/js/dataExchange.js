@@ -37,6 +37,7 @@ function createTableArgumented() {
 		cell.innerHtml = arguments[i];
 	}
 }
+ 
 
 function insertData(obj) {
 	for ( var i in obj) {

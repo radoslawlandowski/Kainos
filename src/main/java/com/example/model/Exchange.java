@@ -44,6 +44,9 @@ public class Exchange {
 		return "Exchange [row=" + Arrays.toString(row) + "]";
 	}
 
+ 
+
+
 
 	
 }
