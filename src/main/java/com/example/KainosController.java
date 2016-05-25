@@ -1,27 +1,15 @@
 package com.example;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.example.model.Exchange;
-import com.example.utils.ExchangeTransformer;
-import com.example.utils.MoneyCalculator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller // should be Controller
 public class KainosController {
 	
-	// private static final Logger logger = LogManager.getLogger(KainosController.class);
+	 private static final Logger logger = LogManager.getLogger(KainosController.class);
 	
 	@Autowired
 	DatabaseService service;
@@ -37,12 +25,21 @@ public class KainosController {
     
     @RequestMapping("/compare")
     public String greeting() {
-    	
-    	
-    	
+
     	return "compare";
     }
 
+    @RequestMapping("/example")
+    public String exampleController() {
+    	logger.info("Entered example COntroller");
+    	return "Goodbye";
+    }
+    
+    @RequestMapping("/d")
+    public String DebugController() {
+    	logger.info("Entered debug COntroller");
+    	return "debug";
+    }
     
 
 }
