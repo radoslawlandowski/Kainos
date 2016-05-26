@@ -16,24 +16,24 @@ public class KainosController {
 	
 	@Autowired
 	DatabaseService service;
-	
-	private void checkDatabase() {
-		if(service.isInitialized() == false) {
+
+    @RequestMapping("/")
+    public String index() {
+    	if(service.isInitialized() == false) {
     		service.initializeDatabase();
         	service.insertDataFromFile(path);
         	logger.info("KainosController, Database initialized");
     	}
-	}
-
-    @RequestMapping("/")
-    public String index() {
-    	checkDatabase();
         return "mainIndex";
     }
     
     @RequestMapping("/compare")
     public String greeting() {
-    	checkDatabase();
+    	if(service.isInitialized() == false) {
+    		service.initializeDatabase();
+        	service.insertDataFromFile(path);
+        	logger.info("KainosController, Database initialized");
+    	}
     	return "compare";
     }
 
