@@ -1,36 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-h2 {
-	border-style: ridge;
-}
 
-form {
-	border-style: ridge;
-}
-
-table {
-	border-collapse: collapse;
-	width: 20%;
-	height: 100%;
-}
-
-th, td {
-	text-align: left;
-	padding: 8px;
-	border: 1px solid black;
-}
-
-th {
-	background-color: #4CAF50;
-	color: white;
-}
-
-tr:nth-child(even) {
-	background-color: #f2f2f2
-}
-</style>
+<link rel="stylesheet" type="text/css" href="js/styles.css">
+ 
 	<script src="js/chartLibs/RGraph.common.core.js"></script>
 	<script src="js/chartLibs/RGraph.common.dynamic.js"></script>
 	<script src="js/chartLibs/RGraph.common.tooltips.js"></script>
@@ -45,17 +18,7 @@ tr:nth-child(even) {
 		<strong>Kainos Web Application</strong>
 		
 	</h2>
-	<script>
-   
-</script>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
 
-  	</script>
-	
-	<div id="curve_chart" style="width: 900px; height: 500px"></div>
-	
- 	<button onclick="exampleFunc()">Click me</button>
 	<form
 		action="javascript:getData()">
 		Set start date <input type="date" name="bday" min="1998-01-05" max="2016-05-12" value="1998-01-05" id=startingDate><br>
@@ -63,20 +26,29 @@ tr:nth-child(even) {
 		<input type="submit" value="Submit">
 	</form>
 
-	<div style="overflow-y: auto;">
+	<div id = "container" style = "width:100%">
+    <div id ="left" style = "float:left; width: 25%;">
 		<table id="myTable">
-			<tr>
-				<th>Date</th>
-				<th>Value</th>
-			</tr>
-			<tr>
+    		<thead>
+        		<tr>
+            		<th>Date</th>
+            		<th>Value</th>
+        		</tr>
+   			</thead>
+    		<tbody>
+       	   </tbody>
 		</table>
-	</div>
-	
-	 <body>
-	 <canvas id="cvs" width="600" height="250">
+    </div>
+    <div id = "middle" style = "float:right; width: 75%;">
+		<canvas id="cvs" width="1000" height="600">
     		[No canvas support]
 		</canvas>
+    </div>
+</div>
+ 
+	
+	 <body>
+	 
    </body>
    
 

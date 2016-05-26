@@ -1,0 +1,48 @@
+
+table tbody 
+{
+   overflow: auto;
+   height: 100px;
+}
+
+table {
+    width: 200px; /* can be dynamic */
+    	border-collapse: collapse;
+    
+}
+
+th
+{
+    width: 150px;
+}
+
+.experiment,.experiment2 {
+    float: left;
+}
+.clearfix{
+    clear:both
+}
+
+h2 {
+	border-style: ridge;
+}
+
+form {
+	border-style: ridge;
+}
+ 
+
+th, td {
+	text-align: left;
+	padding: 8px;
+	border: 1px solid black;
+}
+
+th {
+	background-color: #4CAF50;
+	color: white;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="js/chartLibs/RGraph.common.core.js"></script>
+	<script src="js/chartLibs/RGraph.common.dynamic.js"></script>
+	<script src="js/chartLibs/RGraph.common.tooltips.js"></script>
+	<script src="js/chartLibs/RGraph.common.effects.js"></script>
+	<script src="js/chartLibs/RGraph.line.js"></script>
 <style>
 h2 {
 	border-style: ridge;
@@ -36,38 +41,41 @@ tr:nth-child(even) {
 <body>
 
 	<h2>
-		<strong>Kainos Web Application</strong>
-		<p id="p1">Hello World!</p>
-		<p id="p2">Hello World!</p>
-		<p id="p3">Hello World!</p>
-		<p id="p4">Hello World!</p>
-		 	<button onclick="compare()">Click me</button>
-				 	<button onclick="exampleFunc()">Click me</button>
-		
+		<strong>Kainos Web Application</strong>		
 	</h2>
-
-	<form action="javascript:compare()">
-		First name:<br> <input type="text" name="firstname"
-			value="Mickey"><br> Last name:<br> <input
-			type="text" name="lastname" value="Mouse"><br>
-		<br> <input type="submit" value="Submit" id="button2">
+	
+	<form
+		action="javascript:compare()">
+		Start date: <input type="date" name="bday" min="1998-01-05" max="2016-05-12" value="1998-01-05" id=startingDate><br>
+		End date: <input type="date" name="bday" min="1998-01-05" max="2016-05-12" value="2016-05-12" id=endingDate><br> 
+		Input: <input type="number" name="inputValue" id="inputValue"><br>
+  		Deposit percentage: <input type="number" name="percentageValue" id="percentageValue"><br>
+		<input type="submit" value="Submit">
 	</form>
 
-	<div style="overflow-y: auto;">
+	<div id = "container" style = "width:100%">
+    <div id ="left" style = "float:left; width: 25%;">
 		<table id="myTableCompared">
-
-			<tr>
-				<th>Date</th>
-				<th>FundValue</th>
-				<th>DepositValue</th>
-			</tr>
-			<tr>
+    		<thead>
+        		<tr>
+            		<th>Date</th>
+            		<th>FundValue</th>
+            		<th>DepositValue</th>
+        		</tr>
+   			</thead>
+    		<tbody>
+       	   </tbody>
 		</table>
-	</div>
+    </div>
+    <div id = "middle" style = "float:right; width: 75%;">
+		<canvas id="cvs" width="1000" height="600">	</canvas>
+    </div>
+</div>
 <body>
 </body>
 
 	<script src="js/dataExchange.js"></script>
+	<script src="js/generateChart.js"></script>
 
 
 </body>

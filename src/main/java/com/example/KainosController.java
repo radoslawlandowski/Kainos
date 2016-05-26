@@ -34,4 +34,10 @@ public class KainosController {
     	checkDatabase();
     	return "compare";
     }
+    
+    @RequestMapping("/exp")
+    public String exp() {
+    	checkDatabase();
+    	return "chartExperiments";
+    }
 }

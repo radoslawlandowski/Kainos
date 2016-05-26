@@ -99,8 +99,7 @@ public class SQLRepository {
 		        rs = pstmt.executeQuery();
 		        if (rs.last()) {
 		            rows = rs.getRow();
-		            // Move to beginning
-		            rs.beforeFirst();
+ 		            rs.beforeFirst();
 		        }
 		    } catch (SQLException e ) {
 		        e.printStackTrace();
