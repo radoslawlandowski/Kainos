@@ -14,9 +14,9 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.example.DataTypes;
-import com.example.SQLTable;
+import com.example.model.DataTypes;
 import com.example.model.Exchange;
+import com.example.model.SQLTable;
 
 public class SQLRepository {
 	

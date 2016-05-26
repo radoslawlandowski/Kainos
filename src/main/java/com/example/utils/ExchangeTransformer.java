@@ -13,7 +13,7 @@ import com.example.model.Exchange;
 
 public class ExchangeTransformer {
 	
-	 private static final Logger logger = LogManager.getLogger(ExchangeTransformer.class);
+	private static final Logger logger = LogManager.getLogger(ExchangeTransformer.class);
 	
 	public static Date getDate(String dateAsString) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -21,7 +21,7 @@ public class ExchangeTransformer {
 		try {
 			date = sdf.parse(dateAsString);
 		} catch (ParseException e) {
-			logger.error("The date cannot be parsed. Check your string format. [Should be: dd/mm/yyyy]");
+			logger.error("The date cannot be parsed. Check your string format. [Should be: dd/MM/yyyy]");
 			e.printStackTrace();
 		}
         java.sql.Date sqlDate = new Date(date.getTime()); 
@@ -35,7 +35,7 @@ public class ExchangeTransformer {
 		try {
 			date = sdf.parse(dateAsString);
 		} catch (ParseException e) {
-			logger.error("The date cannot be parsed. Check your string format. [Should be: dd/mm/yyyy]");
+			logger.error("The date cannot be parsed. Check your string format. [Should be: yyyy-MM-dd]");
 			e.printStackTrace();
 		}
         java.sql.Date sqlDate = new Date(date.getTime()); 

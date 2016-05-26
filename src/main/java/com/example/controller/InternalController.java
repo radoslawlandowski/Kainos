@@ -1,4 +1,4 @@
-package com.example;
+package com.example.controller;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.database.DatabaseService;
 import com.example.model.Exchange;
 import com.example.utils.ExchangeTransformer;
 import com.example.utils.MoneyCalculator;

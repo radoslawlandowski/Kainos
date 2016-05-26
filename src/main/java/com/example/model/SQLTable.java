@@ -1,5 +1,4 @@
-package com.example;
-
+package com.example.model;
 
 public class SQLTable {
 	
@@ -9,7 +8,7 @@ public class SQLTable {
 	private DataTypes[] columnTypes; /* enter all types in order as they appear in the file for each column */
 	private int[] sizes;
 	
-	SQLTable(String tableName, String[] columnNames, DataTypes[] columnTypes, int[] sizes) {
+	public SQLTable(String tableName, String[] columnNames, DataTypes[] columnTypes, int[] sizes) {
 		this.tableName = tableName;
 		this.columnNames = columnNames;
 		this.columnTypes = columnTypes;

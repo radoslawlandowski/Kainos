@@ -1,4 +1,4 @@
-package com.example;
+package com.example.database;
 
 import java.sql.Date;
 import java.util.List;

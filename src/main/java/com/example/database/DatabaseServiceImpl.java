@@ -1,4 +1,4 @@
-package com.example;
+package com.example.database;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,9 +13,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.infrastructure.SQLRepository;
+import com.example.model.DataTypes;
 import com.example.model.Exchange;
+import com.example.model.SQLTable;
+import com.example.model.SQLTable;
 import com.example.utils.CSVExchangeExtruder;
-import com.example.utils.DatabaseConnector;
 import com.example.utils.ExchangeTransformer;
 
 public class DatabaseServiceImpl implements DatabaseService {

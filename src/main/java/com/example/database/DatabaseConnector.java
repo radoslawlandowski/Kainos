@@ -1,4 +1,4 @@
-package com.example.utils;
+package com.example.database;
 
 import java.sql.Connection;
 import java.sql.SQLException;
