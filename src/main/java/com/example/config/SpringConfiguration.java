@@ -11,7 +11,7 @@ import com.example.utils.HSQLDBConnector;
 
 @Configuration
 @ComponentScan({"com.example.utils", "com.example"})
-public class SpringConfig {
+public class SpringConfiguration {
  
 	@Bean
 	public CSVExchangeExtruder csvExchangeExtruder() {

@@ -51,7 +51,7 @@ function createChartNew(obj) {
             id: 'cvs',
             data: dataC,
             options: {
-                spline: false,
+                spline: true,
                 splineTickmarksFill: null,
                 textAccessible: true
             }

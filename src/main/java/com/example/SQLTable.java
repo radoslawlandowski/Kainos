@@ -20,11 +20,9 @@ public class SQLTable {
 	public int[] getSizes() {
 		return sizes;
 	}
-
 	public void setSizes(int[] sizes) {
 		this.sizes = sizes;
 	}
-
 	public String[] getColumnNames() {
 		return columnNames;
 	}

@@ -1,12 +1,3 @@
-function createTable() {
-	var table = document.getElementById("myTable");
-	var row = table.insertRow(0);
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-	cell1.innerHTML = "Date";
-	cell2.innerHTML = "Value";
-}
-
 function insertData(obj) {
 	for ( var i in obj) {
 		var id = obj[i].row[0];

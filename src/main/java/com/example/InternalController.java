@@ -42,21 +42,11 @@ public class InternalController {
 		return new ResponseEntity<List<Exchange>>(ex, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/example2", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<String> example(
-			@RequestParam(value = "startdate", required = false, defaultValue = START_DATE) String startDate,
-			@RequestParam(value = "enddate", required = false, defaultValue = END_DATE) String endDate) {
-		logger.info("Example2 site entered!");
-		String ex = "okej!";
-
-		return new ResponseEntity<String>(ex, HttpStatus.OK);
-	}
-	
 	@RequestMapping(value = "/dataCompare", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Exchange>> compareExchanges(
 			@RequestParam(value = "startdate", required = false, defaultValue = START_DATE) String startDate,
 			@RequestParam(value = "enddate", required = false, defaultValue = END_DATE) String endDate,
-			@RequestParam(value = "initialInput", required = false, defaultValue = "100") String input, 
+			@RequestParam(value = "initialInput", required = false, defaultValue = "10000") String input, 
 			@RequestParam(value = "percentage", required = false, defaultValue = "1") String percentage) {
 		
 		logger.info("dataCompare site entered!");
@@ -72,8 +62,8 @@ public class InternalController {
 		
 		MoneyCalculator calc = new MoneyCalculator();
 		//List<Exchange> compared = calc.compareIncomeRevisited(ex, in, perc);
-		List<Exchange> compared = calc.compareIncomeRevisitedNormalized(ex, in, perc);
-
+		//List<Exchange> compared = calc.compareIncomeRevisitedNormalized(ex, in, perc);
+		List<Exchange> compared = calc.compareIncomeFinal(ex, in, perc);
 		
 		return new ResponseEntity<List<Exchange>>(compared, HttpStatus.OK);
 	}

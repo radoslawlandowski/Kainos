@@ -12,6 +12,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.example.infrastructure.SQLRepository;
 import com.example.model.Exchange;
 import com.example.utils.CSVExchangeExtruder;
 import com.example.utils.DatabaseConnector;

@@ -11,86 +11,39 @@ public class MoneyCalculator {
 
 	public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
 	
-	public static final int monetization = 30;
+	public static final int monetizationPeriod = 30; // update deposit value every thirty days
 	
 	private BigDecimal calculateSingleIncome(BigDecimal inputValue, BigDecimal percentage) {
 		BigDecimal val = inputValue.multiply(percentage).divide(ONE_HUNDRED);
 		return val;
 	}
-	
-public List<Exchange> compareIncomeRevisited(List<Exchange> data, BigDecimal inputValue, BigDecimal depPercentage) {
-		
-		List<Exchange> outputList = new ArrayList<Exchange>();
-		
-		int listSize = data.size();
-		
-		BigDecimal fundInputValue = inputValue;
-		BigDecimal depositInputValue = inputValue;
-		
-		BigDecimal fundPercentage = null;
-		BigDecimal depositPercentage = depPercentage;
-		
-		BigDecimal fundOutputValue = null;
-		BigDecimal depositOutputValue = null;
-		
-		for(int i = 0 ; i < listSize ; i++) {
 
-			fundPercentage = (BigDecimal)data.get(i).getRow()[1];
-			
-			fundOutputValue = calculateSingleIncome(fundInputValue, fundPercentage);
-			fundOutputValue = fundOutputValue.setScale(2, RoundingMode.HALF_EVEN);
-			fundInputValue = fundOutputValue;
-			
-			depositOutputValue = calculateSingleIncome(depositInputValue, depositPercentage);
-			depositOutputValue = depositOutputValue.setScale(2, RoundingMode.HALF_EVEN);
-			depositInputValue = depositOutputValue;
-			
-			Object[] container = {data.get(i).getRow()[0], fundOutputValue, depositOutputValue};
-			Exchange row = new Exchange(container);
-			outputList.add(row);
-		}
-		return outputList;
-	}
-
-public List<Exchange> compareIncomeRevisitedNormalized(List<Exchange> data, BigDecimal inputValue, BigDecimal depPercentage) {
+public List<Exchange> compareIncomeFinal(List<Exchange> data, BigDecimal inputValue, BigDecimal depPercentage) {
 	
-	List<Exchange> outputList = new ArrayList<Exchange>();
+	List<Exchange> outputList = new ArrayList<>();
 	
-	int listSize = data.size();
-	
-	BigDecimal fundInputValue = inputValue;
+	BigDecimal basePercentage = (BigDecimal)data.get(0).getRow()[1];
 	BigDecimal depositInputValue = inputValue;
+	BigDecimal depositOutputValue = depositInputValue;
 	
-	BigDecimal fundPercentage = new BigDecimal(100);
-	BigDecimal averagedFundPercentage = new BigDecimal(0);
-	BigDecimal depositPercentage = depPercentage;
-	
-	BigDecimal fundOutputValue = new BigDecimal(0);
-	BigDecimal depositOutputValue = new BigDecimal(0);
-	
-	for(int i = 0 ; i < listSize ; i++) {
-
-		averagedFundPercentage = averagedFundPercentage.add((BigDecimal)data.get(i).getRow()[1]);
+	for(int i = 0 ; i < data.size() ; i++) {
+		BigDecimal currentPercentage = (BigDecimal)data.get(i).getRow()[1];
+		BigDecimal diffPercentage = currentPercentage.subtract(basePercentage).add(ONE_HUNDRED);
+		BigDecimal fundValue = calculateSingleIncome(inputValue, diffPercentage);
+		fundValue = fundValue.setScale(2, RoundingMode.HALF_EVEN);
 		
-		fundOutputValue = fundInputValue;
-		depositOutputValue = depositInputValue;
-		
-		if(i % monetization == 0 && i != 0) {
-			fundPercentage = averagedFundPercentage.divide(new BigDecimal(monetization), 2, RoundingMode.HALF_EVEN);
-			fundOutputValue = calculateSingleIncome(fundInputValue, fundPercentage);
-			depositOutputValue = calculateSingleIncome(depositInputValue, depositPercentage);
-			fundOutputValue = fundOutputValue.setScale(2, RoundingMode.HALF_EVEN);
-			fundInputValue = fundOutputValue;
+		if(i % monetizationPeriod == 0 && i != 0) {
+			depositOutputValue = calculateSingleIncome(depositInputValue, depPercentage);
 			depositOutputValue = depositOutputValue.setScale(2, RoundingMode.HALF_EVEN);
 			depositInputValue = depositOutputValue;
-			averagedFundPercentage = new BigDecimal(100);
 		}
 		
-		Object[] container = {data.get(i).getRow()[0], fundOutputValue, depositOutputValue};
-		Exchange row = new Exchange(container);
-		outputList.add(row);
+		Object[] container = {data.get(i).getRow()[0], fundValue, depositOutputValue};
+		Exchange ex = new Exchange(container);
+		outputList.add(ex);
 	}
+
 	return outputList;
 }
-	
+
 }
