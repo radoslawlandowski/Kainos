@@ -51,6 +51,9 @@ function createChartNew(obj) {
             id: 'cvs',
             data: dataC,
             options: {
+            	xaxispos: 'center',
+            	backgroundGrid: false,
+            	outofbounds: true,
                 spline: true,
                 splineTickmarksFill: null,
                 textAccessible: true

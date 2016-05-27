@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -16,20 +17,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.database.DatabaseService;
+import com.example.model.CalculationResults;
 import com.example.model.Exchange;
-import com.example.utils.ExchangeTransformer;
+import com.example.utils.FormatTransformer;
 import com.example.utils.MoneyCalculator;
 
 @RestController
-public class InternalController {
+public class ApiController {
 
-	private static final Logger logger = LogManager.getLogger(InternalController.class);
+	private static final Logger logger = LogManager.getLogger(ApiController.class);
 	
 	private static final String START_DATE = "1998-01-05";
 	private static final String END_DATE = "2016-05-12";
 
 	@Autowired
 	DatabaseService service;
+	
+	@Autowired
+	FormatTransformer transformer;
 
 	@RequestMapping(value = "/dataExchange", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Exchange>> returnText(
@@ -37,14 +42,20 @@ public class InternalController {
 			@RequestParam(value = "enddate", required = true, defaultValue = END_DATE) String endDate) {
 		logger.info("dataExchange site entered!");
 
-		Date start = ExchangeTransformer.getDateFromHtml(startDate);
-		Date end = ExchangeTransformer.getDateFromHtml(endDate);
-		List<Exchange> ex = service.selectWhereDate(start, end);
+		Date start = transformer.getDateFromHtml(startDate);
+		Date end = transformer.getDateFromHtml(endDate);
+		
+		List<Exchange> ex = new ArrayList<>();
+		if(startDate.equals(START_DATE) && endDate.equals(END_DATE)) {
+			ex = service.selectAll();
+		} else {
+			ex = service.selectWhereDate(start, end);
+		}
 		return new ResponseEntity<List<Exchange>>(ex, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/dataCompare", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<Exchange>> compareExchanges(
+	public @ResponseBody ResponseEntity<List<CalculationResults>> compareExchanges(
 			@RequestParam(value = "startdate", required = false, defaultValue = START_DATE) String startDate,
 			@RequestParam(value = "enddate", required = false, defaultValue = END_DATE) String endDate,
 			@RequestParam(value = "initialInput", required = false, defaultValue = "10000") String input, 
@@ -52,9 +63,15 @@ public class InternalController {
 		
 		logger.info("dataCompare site entered!");
 		
-		Date start = ExchangeTransformer.getDateFromHtml(startDate);
-		Date end = ExchangeTransformer.getDateFromHtml(endDate);
-		List<Exchange> ex = service.selectWhereDate(start, end);
+		Date start = transformer.getDateFromHtml(startDate);
+		Date end = transformer.getDateFromHtml(endDate);
+		
+		List<Exchange> ex = new ArrayList<>();
+		if(startDate.equals(START_DATE) && endDate.equals(END_DATE)) {
+			ex = service.selectAll();
+		} else {
+			ex = service.selectWhereDate(start, end);
+		}
 		
 		BigDecimal in = new BigDecimal(input);
 		
@@ -62,11 +79,9 @@ public class InternalController {
 		BigDecimal perc = new BigDecimal(percentage).add(factor);
 		
 		MoneyCalculator calc = new MoneyCalculator();
-		//List<Exchange> compared = calc.compareIncomeRevisited(ex, in, perc);
-		//List<Exchange> compared = calc.compareIncomeRevisitedNormalized(ex, in, perc);
-		List<Exchange> compared = calc.compareIncomeFinal(ex, in, perc);
+		List<CalculationResults> compared = calc.compareIncomeFinal(ex, in, perc);
 		
-		return new ResponseEntity<List<Exchange>>(compared, HttpStatus.OK);
+		return new ResponseEntity<List<CalculationResults>>(compared, HttpStatus.OK);
 	}
 	
 

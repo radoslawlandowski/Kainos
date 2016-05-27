@@ -16,9 +16,11 @@ import org.junit.Test;
 
 import com.example.model.Exchange;
 
-public class ExchangeTransformerTest {
+public class FormatTransformerTest {
 	
-	private static final Logger logger = LogManager.getLogger(ExchangeTransformerTest.class);
+	private static final Logger logger = LogManager.getLogger(FormatTransformerTest.class);
+	
+	private FormatTransformer trans = null;
 	
 	String dateSlash = "20/10/2012";	
 	String dateHyphen = "2012-10-20";
@@ -32,6 +34,7 @@ public class ExchangeTransformerTest {
 	
 	@Before
 	public void setUp() {
+		trans = new FormatTransformer();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date = null;
 		try {
@@ -45,7 +48,7 @@ public class ExchangeTransformerTest {
 	
 	@Test
 	public void getDateFromCorrectString() {
-		String accuired = ExchangeTransformer.getDate(dateSlash).toString();
+		String accuired = trans.getDate(dateSlash).toString();
 		String expected = "2012-10-20";
 		assertEquals(expected, accuired);
 	}
@@ -55,7 +58,7 @@ public class ExchangeTransformerTest {
 		BigDecimal expected = new BigDecimal(12333.123);
 		expected = expected.setScale(2, RoundingMode.HALF_EVEN);
 		String valueAsString = "12  3  33 .123  "; // whitespaces
-		BigDecimal accuired = ExchangeTransformer.getBigDecimal(valueAsString);
+		BigDecimal accuired = trans.getBigDecimal(valueAsString);
 		assertEquals(expected, accuired);
 	}
 	
@@ -69,7 +72,7 @@ public class ExchangeTransformerTest {
 		Object[] containerFinal = {sqlDate, expVal};
 		Exchange expected = new Exchange(containerFinal);
 		
-		ExchangeTransformer.transform(argument);
+		trans.transform(argument);
 		
 		assertEquals(expected, argument);
 	}

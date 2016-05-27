@@ -24,7 +24,7 @@ public class KainosControllerTest {
 	
 	private KainosController KainosController = new KainosController();
 	
-	private static final String path = "/home/radek/Documents/newWorkspace/Kainos/src/main/resources/data.csv";
+ 	private static final String fileName = "data.csv";
 	
 	@Mock
 	private DatabaseService mockService;
@@ -48,7 +48,7 @@ public class KainosControllerTest {
 			e.printStackTrace();
 		}
 		verify(mockService, times(1)).initializeDatabase();
-		verify(mockService, times(1)).insertDataFromFile(path);
+		verify(mockService, times(1)).insertDataFromFile(fileName);
 	}
 	
 	@Test
@@ -64,7 +64,7 @@ public class KainosControllerTest {
 			e.printStackTrace();
 		}
 		verify(mockService, times(0)).initializeDatabase();
-		verify(mockService, times(0)).insertDataFromFile(path);
+		verify(mockService, times(0)).insertDataFromFile(fileName);
 	}
 	
 	@Test
@@ -80,7 +80,7 @@ public class KainosControllerTest {
 			e.printStackTrace();
 		}
 		verify(mockService, times(1)).initializeDatabase();
-		verify(mockService, times(1)).insertDataFromFile(path);
+		verify(mockService, times(1)).insertDataFromFile(fileName);
 	}
 	
 	@Test
@@ -96,7 +96,7 @@ public class KainosControllerTest {
 			e.printStackTrace();
 		}
 		verify(mockService, times(0)).initializeDatabase();
-		verify(mockService, times(0)).insertDataFromFile(path);
+		verify(mockService, times(0)).insertDataFromFile(fileName);
 	}
 
 }

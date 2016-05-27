@@ -12,28 +12,29 @@ import com.example.database.DatabaseService;
 public class KainosController {
 	
 	private static final Logger logger = LogManager.getLogger(KainosController.class);
-	private static final String path = "/home/radek/Documents/newWorkspace/Kainos/src/main/resources/data.csv";
 	
+ 	private static final String fileName = "data.csv";
+ 	
 	@Autowired
 	DatabaseService service;
+	
+	private void checkDatabase() {
+	  	if (service.isInitialized() == false) {
+    		service.initializeDatabase();
+        	service.insertDataFromFile(fileName);
+        	logger.info("Database initialized");
+    	}
+	}
 
     @RequestMapping("/")
     public String index() {
-    	if(service.isInitialized() == false) {
-    		service.initializeDatabase();
-        	service.insertDataFromFile(path);
-        	logger.info("KainosController, Database initialized");
-    	}
+    	checkDatabase();
         return "mainIndex";
     }
     
     @RequestMapping("/compare")
     public String greeting() {
-    	if(service.isInitialized() == false) {
-    		service.initializeDatabase();
-        	service.insertDataFromFile(path);
-        	logger.info("KainosController, Database initialized");
-    	}
+    	checkDatabase();
     	return "comp";
     }
 

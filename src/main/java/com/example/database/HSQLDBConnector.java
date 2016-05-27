@@ -39,10 +39,10 @@ public class HSQLDBConnector implements DatabaseConnector {
 	         Class.forName(this.driver);
 	         c = DriverManager.getConnection(this.path, this.login, this.password);
 	      } catch (Exception e) {
-	    	  logger.error("Cannot connect to the database");
+	    	  logger.error("Cannot connect to the database", e);
 	    	  throw new SQLException();
 	      }
-	      logger.info("Connected to database successfully!");
+	      logger.info("Connected to the database!");
 	      return c;
 	}
 }

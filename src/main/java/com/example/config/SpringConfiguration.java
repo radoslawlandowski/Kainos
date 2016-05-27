@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import com.example.database.DatabaseServiceImpl;
 import com.example.database.HSQLDBConnector;
 import com.example.utils.CSVExchangeExtruder;
+import com.example.utils.FormatTransformer;
 
 @Configuration
 @ComponentScan({"com.example.utils", "com.example"})
@@ -25,6 +26,11 @@ public class SpringConfiguration {
 	@Bean
 	public DatabaseServiceImpl DatabaseServiceImpl() {
 		return new DatabaseServiceImpl();
+	}
+	
+	@Bean
+	public FormatTransformer FormatTransformer() {
+		return new FormatTransformer();
 	}
  
 }

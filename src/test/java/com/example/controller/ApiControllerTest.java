@@ -14,19 +14,19 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.example.database.DatabaseService;
 
 @RunWith(MockitoJUnitRunner.class)
-public class InternalControllerTest {
+public class ApiControllerTest {
 
 	private MockMvc mockMvc;
 	
-	private InternalController InternalController = new InternalController();
+	private ApiController apiController = new ApiController();
 		
 	@Mock
 	private DatabaseService mockService;
 	
 	@Before
 	public void setUp() {
-		InternalController.service = mockService;
-		mockMvc = MockMvcBuilders.standaloneSetup(InternalController).build();
+		apiController.service = mockService;
+		mockMvc = MockMvcBuilders.standaloneSetup(apiController).build();
 	}
 	
 	@Test

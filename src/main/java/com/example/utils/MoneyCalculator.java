@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.model.CalculationResults;
 import com.example.model.Exchange;
 
 public class MoneyCalculator {
@@ -18,9 +19,9 @@ public class MoneyCalculator {
 		return val;
 	}
 
-public List<Exchange> compareIncomeFinal(List<Exchange> data, BigDecimal inputValue, BigDecimal depPercentage) {
+public List<CalculationResults> compareIncomeFinal(List<Exchange> data, BigDecimal inputValue, BigDecimal depPercentage) {
 	
-	List<Exchange> outputList = new ArrayList<>();
+	List<CalculationResults> outputList = new ArrayList<>();
 	
 	BigDecimal basePercentage = (BigDecimal)data.get(0).getRow()[1];
 	BigDecimal depositInputValue = inputValue;
@@ -39,8 +40,8 @@ public List<Exchange> compareIncomeFinal(List<Exchange> data, BigDecimal inputVa
 		}
 		
 		Object[] container = {data.get(i).getRow()[0], fundValue, depositOutputValue};
-		Exchange ex = new Exchange(container);
-		outputList.add(ex);
+		CalculationResults res = new CalculationResults(container);
+		outputList.add(res);
 	}
 
 	return outputList;

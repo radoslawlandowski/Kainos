@@ -1,8 +1,8 @@
 package com.example.database;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -13,11 +13,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.infrastructure.SQLRepository;
-import com.example.model.DataTypes;
 import com.example.model.Exchange;
-import com.example.model.SQLTable;
 import com.example.utils.CSVExchangeExtruder;
-import com.example.utils.ExchangeTransformer;
+import com.example.utils.FormatTransformer;
 
 public class DatabaseServiceImpl implements DatabaseService {
 	
@@ -28,6 +26,9 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	@Autowired
 	private CSVExchangeExtruder extruder;
+	
+	@Autowired
+	private FormatTransformer transformer;
 	
 	private SQLRepository repo;
 	
@@ -46,19 +47,14 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 
 	@Override
-	public void insertDataFromFile(String path) {
-   	    BufferedReader br = null;
-   	 	try {
-			br = new BufferedReader(new FileReader(path));
-		} catch (FileNotFoundException e1) {
-			logger.error("File not found. Check your path");
-			e1.printStackTrace(); 
-		}
+	public void insertDataFromFile(String fileName) {
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileName);
+		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
    	 	extruder.setReader(br);
      	extruder.next(); // skip first row 'cause it contains column names
      	while(extruder.hasNext()) {
      		Exchange ex = extruder.next();
-     		ExchangeTransformer.transform(ex);
+     		transformer.transform(ex);
      		repo.insertRowRevisited(ex.getRow());
      	}     	
 	}
@@ -66,8 +62,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Override
 	public List<Exchange> selectAll() {
 		List<Exchange> result;
-		String[] allColumns = repo.getTable().getColumnNames();
-		result = repo.selectRevisited(allColumns);
+		result = repo.selectRevisited();
 		return result;
 	}
 
@@ -79,24 +74,15 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 
 	@Override
-	public void initializeDatabase() {
-		String tableName = "kainos";
-     	String[] columnNames = {"mydate", "val"};
-     	DataTypes[] types = {DataTypes.DATE, DataTypes.CHAR};
-     	int firstColumnLength = 0;
-    	int secondColumnLength = 6;
-     	int[] sizes = {firstColumnLength, secondColumnLength};
-     	SQLTable myTable = new SQLTable(tableName, columnNames, types, sizes);
-     	
+	public void initializeDatabase() {     	
      	Connection c = null;
      	try {
 			c = connector.connect();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Couldn't obtain database connetion", e);
 		}
      	
-	    this.repo = new SQLRepository(c, myTable);
-   	    repo.createTableInsideDatabase();
-   	    
+	    this.repo = new SQLRepository(c);
+   	    repo.createTableInsideDatabaseRevisited();
 	}
 }
