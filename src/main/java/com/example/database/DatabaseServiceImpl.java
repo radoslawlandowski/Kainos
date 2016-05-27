@@ -16,7 +16,6 @@ import com.example.infrastructure.SQLRepository;
 import com.example.model.DataTypes;
 import com.example.model.Exchange;
 import com.example.model.SQLTable;
-import com.example.model.SQLTable;
 import com.example.utils.CSVExchangeExtruder;
 import com.example.utils.ExchangeTransformer;
 

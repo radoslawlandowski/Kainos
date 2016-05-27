@@ -3,7 +3,6 @@ package com.example.controller;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -76,7 +75,7 @@ public class KainosControllerTest {
 		try {
 			mockMvc.perform(get("/compare"))
 			.andExpect(status().isOk())
-			.andExpect(view().name("compare"));
+			.andExpect(view().name("comp"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -92,7 +91,7 @@ public class KainosControllerTest {
 		try {
 			mockMvc.perform(get("/compare"))
 			.andExpect(status().isOk())
-			.andExpect(view().name("compare"));
+			.andExpect(view().name("comp"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

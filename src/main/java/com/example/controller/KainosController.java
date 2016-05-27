@@ -34,7 +34,7 @@ public class KainosController {
         	service.insertDataFromFile(path);
         	logger.info("KainosController, Database initialized");
     	}
-    	return "compare";
+    	return "comp";
     }
 
 }
