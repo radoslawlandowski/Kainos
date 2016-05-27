@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,8 @@ import com.example.utils.FormatTransformer;
 public class DatabaseServiceImpl implements DatabaseService {
 	
 	private static final Logger logger = LogManager.getLogger(DatabaseServiceImpl.class);
-	
+	private static final String fileName = "data.csv";
+
 	@Autowired
 	private DatabaseConnector connector;
 	
@@ -30,7 +33,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Autowired
 	private FormatTransformer transformer;
 	
-	private SQLRepository repo;
+	private SQLRepository repo = null;
 	
 	public DatabaseServiceImpl() {
 	}
@@ -73,16 +76,20 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return list;
 	}
 
+	@PostConstruct
 	@Override
-	public void initializeDatabase() {     	
-     	Connection c = null;
-     	try {
+	public void initializeDatabase() {
+		Connection c = null;
+		try {
 			c = connector.connect();
 		} catch (SQLException e) {
-			logger.error("Couldn't obtain database connetion", e);
+			logger.error("Can't connect to database", e);
 		}
-     	
-	    this.repo = new SQLRepository(c);
+		repo = new SQLRepository(c);
    	    repo.createTableInsideDatabaseRevisited();
+   	    this.insertDataFromFile(fileName);
+   	    logger.info("DATABASE INITIALIZED POSTCONSTRUCT");
+   	    
 	}
+	
 }

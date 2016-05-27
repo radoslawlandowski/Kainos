@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -47,8 +45,6 @@ public class KainosControllerTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		verify(mockService, times(1)).initializeDatabase();
-		verify(mockService, times(1)).insertDataFromFile(fileName);
 	}
 	
 	@Test
@@ -63,8 +59,6 @@ public class KainosControllerTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		verify(mockService, times(0)).initializeDatabase();
-		verify(mockService, times(0)).insertDataFromFile(fileName);
 	}
 	
 	@Test
@@ -79,8 +73,6 @@ public class KainosControllerTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		verify(mockService, times(1)).initializeDatabase();
-		verify(mockService, times(1)).insertDataFromFile(fileName);
 	}
 	
 	@Test
@@ -95,8 +87,6 @@ public class KainosControllerTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		verify(mockService, times(0)).initializeDatabase();
-		verify(mockService, times(0)).insertDataFromFile(fileName);
 	}
 
 }

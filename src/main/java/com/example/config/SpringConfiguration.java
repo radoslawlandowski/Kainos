@@ -10,7 +10,7 @@ import com.example.utils.CSVExchangeExtruder;
 import com.example.utils.FormatTransformer;
 
 @Configuration
-@ComponentScan({"com.example.utils", "com.example"})
+@ComponentScan({"com.example.utils", "com.example", "com.example.infrastructure", "com.example.database"})
 public class SpringConfiguration {
  
 	@Bean
@@ -32,5 +32,6 @@ public class SpringConfiguration {
 	public FormatTransformer FormatTransformer() {
 		return new FormatTransformer();
 	}
+ 
  
 }

@@ -40,6 +40,7 @@ public class ApiController {
 	public @ResponseBody ResponseEntity<List<Exchange>> returnText(
 			@RequestParam(value = "startdate", required = true, defaultValue = START_DATE) String startDate,
 			@RequestParam(value = "enddate", required = true, defaultValue = END_DATE) String endDate) {
+		
 		logger.info("dataExchange site entered!");
 
 		Date start = transformer.getDateFromHtml(startDate);

@@ -12,7 +12,7 @@ public class MoneyCalculator {
 
 	public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
 	
-	public static final int monetizationPeriod = 30; // update deposit value every thirty days
+	public static final int monetizationPeriod = 25; // TODO: implement better monetization period algorithm
 	
 	private BigDecimal calculateSingleIncome(BigDecimal inputValue, BigDecimal percentage) {
 		BigDecimal val = inputValue.multiply(percentage).divide(ONE_HUNDRED);
