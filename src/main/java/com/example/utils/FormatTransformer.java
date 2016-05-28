@@ -21,8 +21,7 @@ public class FormatTransformer {
 		try {
 			date = sdf.parse(dateAsString);
 		} catch (ParseException e) {
-			logger.error("The date cannot be parsed. Check your string format. [Should be: dd/MM/yyyy]");
-			e.printStackTrace();
+			logger.error("The date cannot be parsed. Check your string format. [Should be: dd/MM/yyyy]", e);
 		}
         java.sql.Date sqlDate = new Date(date.getTime()); 
 
@@ -35,8 +34,7 @@ public class FormatTransformer {
 		try {
 			date = sdf.parse(dateAsString);
 		} catch (ParseException e) {
-			logger.error("The date cannot be parsed. Check your string format. [Should be: yyyy-MM-dd]");
-			e.printStackTrace();
+			logger.error("The date cannot be parsed. Check your string format. [Should be: yyyy-MM-dd]", e);
 		}
         java.sql.Date sqlDate = new Date(date.getTime()); 
 
@@ -46,19 +44,6 @@ public class FormatTransformer {
 	public BigDecimal getBigDecimal(String valueAsString) {
 		BigDecimal value = new BigDecimal(valueAsString.replaceAll("\\s+","")).setScale(2, RoundingMode.HALF_EVEN);
 		return value;
-	}
-	
-	public void transform(Exchange ex) {
-		byte datePos = 0;
-		byte valuePos = 1;
-		String dateAsString = (String)ex.getRow()[datePos];
- 		String valueAsString = (String)ex.getRow()[valuePos];
-
- 		Date date = getDate(dateAsString);
- 		BigDecimal value = getBigDecimal(valueAsString);
- 		
- 		Object[] container = {date, value};
- 		ex.setRow(container);
 	}
 					 
 }

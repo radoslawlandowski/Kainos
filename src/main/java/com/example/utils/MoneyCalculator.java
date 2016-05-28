@@ -23,12 +23,12 @@ public List<CalculationResults> compareIncomeFinal(List<Exchange> data, BigDecim
 	
 	List<CalculationResults> outputList = new ArrayList<>();
 	
-	BigDecimal basePercentage = (BigDecimal)data.get(0).getRow()[1];
+	BigDecimal basePercentage = (BigDecimal)data.get(0).getValue();
 	BigDecimal depositInputValue = inputValue;
 	BigDecimal depositOutputValue = depositInputValue;
 	
 	for(int i = 0 ; i < data.size() ; i++) {
-		BigDecimal currentPercentage = (BigDecimal)data.get(i).getRow()[1];
+		BigDecimal currentPercentage = (BigDecimal)data.get(i).getValue();
 		BigDecimal diffPercentage = currentPercentage.subtract(basePercentage).add(ONE_HUNDRED);
 		BigDecimal fundValue = calculateSingleIncome(inputValue, diffPercentage);
 		fundValue = fundValue.setScale(2, RoundingMode.HALF_EVEN);
@@ -39,8 +39,8 @@ public List<CalculationResults> compareIncomeFinal(List<Exchange> data, BigDecim
 			depositInputValue = depositOutputValue;
 		}
 		
-		Object[] container = {data.get(i).getRow()[0], fundValue, depositOutputValue};
-		CalculationResults res = new CalculationResults(container);
+		Object[] container = {data.get(i).getDate(), fundValue, depositOutputValue};
+		CalculationResults res = new CalculationResults(data.get(i).getDate(), fundValue, depositOutputValue);
 		outputList.add(res);
 	}
 

@@ -2,6 +2,8 @@ package com.example.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Iterator;
 
 import org.apache.log4j.LogManager;
@@ -48,12 +50,18 @@ public class CSVExchangeExtruder implements Iterator<Exchange> {
 			e.printStackTrace();
 		}
 		String separatingRegex = " *" + commaSeparator + " *";
-		Object[] columns = line.split(separatingRegex);
+		String[] columns = line.split(separatingRegex);
 		if(columns[0] == line) { // checks if 'split(separatingRegex) splitted the row properly
 			logger.warn("String does not contain the specified separator");
-			throw new IllegalArgumentException("String does not contain the specified separator");
+			return null;
 		} else {
-			Exchange ex = new Exchange(columns);
+			if(columns[0].equals("Data")) {
+				return null;
+			}
+			FormatTransformer trans = new FormatTransformer();
+			Date date = trans.getDate(columns[0]);
+			BigDecimal value = trans.getBigDecimal(columns[1]);
+			Exchange ex = new Exchange(date, value);
 			return ex;
 		}
 	}

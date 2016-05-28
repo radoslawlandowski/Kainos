@@ -5,12 +5,15 @@
 	 RGraph.clear(canvas);
 
 	 var separatedData = [];
-	 var l = obj.length;
-	 var k = obj[0].row.length // check how many lines to draw
-	 for(j = 0 ; j < k; j++) {
+	 var arraySize = obj.length;	 
+	 var arr = obj[0];
+	 var numOfElements = arr 
+	 for(var key in arr) {
 		 var column = [];
-		 for ( var i=0; i < l ; i++ ) {
-		     column.push(obj[i].row[j]);
+		 var attrName = key;
+		 for ( var i=0; i < arraySize ; i++ ) {
+			 var value = obj[i][key]
+		     column.push(value);
 		 }
 		 separatedData.push(column);
 	 }
@@ -28,7 +31,6 @@
 			 labels.push(separatedData[0][i]);
 		 } else {
 			 labels.push("");
-
 		 }
 	 }
 	 

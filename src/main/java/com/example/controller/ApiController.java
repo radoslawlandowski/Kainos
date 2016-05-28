@@ -52,6 +52,7 @@ public class ApiController {
 		} else {
 			ex = service.selectWhereDate(start, end);
 		}
+		
 		return new ResponseEntity<List<Exchange>>(ex, HttpStatus.OK);
 	}
 	

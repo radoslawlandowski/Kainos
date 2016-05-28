@@ -1,47 +1,42 @@
 package com.example.model;
 
-import java.util.Arrays;
+import java.math.BigDecimal;
+import java.sql.Date;
 
 public class CalculationResults {
-	private Object[] row;
+	private Date date;
+	private BigDecimal fundValue;
+	private BigDecimal depositValue;
 	
-	public CalculationResults(Object[] myRow) {
-		this.row = myRow;
+	public CalculationResults(Date myDate, BigDecimal myFundValue, BigDecimal myDepositValue) {
+		date = myDate;
+		fundValue = myFundValue;
+		depositValue = myDepositValue;
 	}
 
-	public Object[] getRow() {
-		return row;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setRow(Object[] row) {
-		this.row = row;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(row);
-		return result;
+	public BigDecimal getFundValue() {
+		return fundValue;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CalculationResults other = (CalculationResults) obj;
-		if (!Arrays.equals(row, other.row))
-			return false;
-		return true;
+	public void setFundValue(BigDecimal fundValue) {
+		this.fundValue = fundValue;
 	}
 
-	@Override
-	public String toString() {
-		return "CalculationResults [row=" + Arrays.toString(row) + "]";
+	public BigDecimal getDepositValue() {
+		return depositValue;
 	}
+
+	public void setDepositValue(BigDecimal depositValue) {
+		this.depositValue = depositValue;
+	}
+
 
 }

@@ -1,52 +1,41 @@
 package com.example.model;
  
-import java.util.Arrays;
-
+import java.math.BigDecimal;
+import java.sql.Date;
+ 
 public class Exchange {
-	private Object[] row;
 	
-	public Exchange(Object[] myRow) {
-		this.row = myRow;
+	private Date date;
+	private BigDecimal value;
+	
+	public Exchange(Date myDate, BigDecimal myValue) {
+		date = myDate;
+		value = myValue;
+	}
+	
+	public Date getDate() {
+		return date;
 	}
 
-	public Object[] getRow() {
-		return row;
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	public void setRow(Object[] row) {
-		this.row = row;
+
+	public BigDecimal getValue() {
+		return value;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(row);
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Exchange other = (Exchange) obj;
-		if (!Arrays.equals(row, other.row))
-			return false;
-		return true;
+	public void setValue(BigDecimal value) {
+		this.value = value;
 	}
 
 	@Override
 	public String toString() {
-		return "Exchange [row=" + Arrays.toString(row) + "]";
+		return "Exchange [date=" + date + ", value=" + value + "]";
 	}
-
- 
-
-
 
 	
 }

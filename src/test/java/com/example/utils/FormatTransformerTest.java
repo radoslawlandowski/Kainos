@@ -62,20 +62,7 @@ public class FormatTransformerTest {
 		assertEquals(expected, accuired);
 	}
 	
-	@Test
-	public void transformExchange() {
-		Object[] containerRaw = {dateSlash, "123.32"};
-		Exchange argument = new Exchange(containerRaw);
-		
-		BigDecimal expVal = new BigDecimal(123.32);
-		expVal = expVal.setScale(2, RoundingMode.HALF_EVEN);
-		Object[] containerFinal = {sqlDate, expVal};
-		Exchange expected = new Exchange(containerFinal);
-		
-		trans.transform(argument);
-		
-		assertEquals(expected, argument);
-	}
+ 
 	
 
 }

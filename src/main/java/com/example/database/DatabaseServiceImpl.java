@@ -3,6 +3,7 @@ package com.example.database;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -56,8 +57,9 @@ public class DatabaseServiceImpl implements DatabaseService {
      	extruder.next(); // skip first row 'cause it contains column names
      	while(extruder.hasNext()) {
      		Exchange ex = extruder.next();
-     		transformer.transform(ex);
-     		repo.insertRowRevisited(ex.getRow());
+     		Date date = ex.getDate();
+     		BigDecimal value = ex.getValue();
+     		repo.insertRowRevisited(date, value);
      	}     	
 	}
 

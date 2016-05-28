@@ -81,7 +81,7 @@ public class SQLRepository {
 		}
 	}
 
-	public void insertRowRevisited(Object[] data) throws IllegalArgumentException {
+	public void insertRowRevisited(Date date, BigDecimal value) throws IllegalArgumentException {
 
 		String insertString = "INSERT INTO kainos VALUES (?, ?);";
 
@@ -89,8 +89,8 @@ public class SQLRepository {
 		try {
 			c.setAutoCommit(false);
 			pstmt = c.prepareStatement(insertString);
-			pstmt.setDate(1, (Date) data[0]);
-			pstmt.setBigDecimal(2, (BigDecimal) data[1]);
+			pstmt.setDate(1, date);
+			pstmt.setBigDecimal(2, value);
 			pstmt.executeUpdate();
 			c.commit();
 		} catch (SQLException e) {
@@ -111,7 +111,7 @@ public class SQLRepository {
 				Date date = rs.getDate("mydate");
 				BigDecimal value = rs.getBigDecimal("val").setScale(2, RoundingMode.HALF_EVEN);
 				Object[] container = { date, value };
-				Exchange row = new Exchange(container);
+				Exchange row = new Exchange(date, value);
 				rows.add(row);
 			}
 		} catch (SQLException e) {
