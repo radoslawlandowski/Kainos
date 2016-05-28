@@ -15,7 +15,7 @@ public class KainosController {
 	
 	@Autowired
 	DatabaseService service;
-
+	
     @RequestMapping("/")
     public String index() {
     	logger.info("Entered \"/\" page");

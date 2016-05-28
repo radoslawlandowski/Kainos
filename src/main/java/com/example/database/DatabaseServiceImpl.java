@@ -33,14 +33,13 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Autowired
 	FormatTransformer transformer;
 	
-	private SQLRepository repo = null;
+	private SQLRepository repo;
 	
-	public DatabaseServiceImpl() {
-	}
+	public DatabaseServiceImpl() {}
 	
 	@Override
 	public boolean isInitialized() {
-		boolean result = false;
+		boolean result = repo != null;
 		if(repo == null) {
 			result = false;
 		} else {
