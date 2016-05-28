@@ -25,7 +25,7 @@ public class KainosController {
     @RequestMapping("/compare")
     public String greeting() {
     	logger.info("Entered \"/compare\" page");
-    	return "comp";
+    	return "compTest";
     }
 
 }

@@ -1,4 +1,3 @@
-
 table tbody 
 {
    overflow: auto;
@@ -7,8 +6,7 @@ table tbody
 
 table {
     width: 200px; /* can be dynamic */
-    	border-collapse: collapse;
-    
+    border-collapse: collapse;
 }
 
 th

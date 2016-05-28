@@ -8,7 +8,7 @@ function compare() {
 		return;
 	}
 
-	var table = document.getElementById("myTableCompared");
+	var table = document.getElementById("myTable");
 	clearTable(table);
 	
 	var xhttp = new XMLHttpRequest();
@@ -16,12 +16,7 @@ function compare() {
 		if (xhttp.readyState == 4 && xhttp.status == 200) {
 			var pre = xhttp.responseText;
 			var obj = JSON.parse(pre);
-			for ( var i in obj) {
-				var date = obj[i].row[0];
-				var fund = obj[i].row[1];
-				var depo = obj[i].row[2];
-				insertRowThree(date, fund, depo);
-			}
+			insertDataArgumented(obj);
 			createChartNew(obj);
 		}
 	};

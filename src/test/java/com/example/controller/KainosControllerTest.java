@@ -21,9 +21,7 @@ public class KainosControllerTest {
 	private MockMvc mockMvc;
 	
 	private KainosController KainosController = new KainosController();
-	
- 	private static final String fileName = "data.csv";
-	
+		
 	@Mock
 	private DatabaseService mockService;
 	
@@ -34,10 +32,7 @@ public class KainosControllerTest {
 	}
 	
 	@Test
-	public void sendGetRequestWhenDatabaseNotInitialized() {
-		
-		Mockito.when(mockService.isInitialized()).thenReturn(false);
-		
+	public void sendGetRequest() {		
 		try {
 			mockMvc.perform(get("/"))
 			.andExpect(status().isOk())
@@ -48,42 +43,14 @@ public class KainosControllerTest {
 	}
 	
 	@Test
-	public void sendGetRequestWhenDatabaseInitialized() {
-		
-		Mockito.when(mockService.isInitialized()).thenReturn(true);
-		
-		try {
-			mockMvc.perform(get("/"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("mainIndex"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Test
-	public void sendGetCompareRequestWhenDatabaseInitialized() {
+	public void sendGetCompareRequest() {
 		
 		Mockito.when(mockService.isInitialized()).thenReturn(false);
 		
 		try {
 			mockMvc.perform(get("/compare"))
 			.andExpect(status().isOk())
-			.andExpect(view().name("comp"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Test
-	public void sendGetCompareRequestWhenDatabaseNotInitialized() {
-		
-		Mockito.when(mockService.isInitialized()).thenReturn(true);
-		
-		try {
-			mockMvc.perform(get("/compare"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("comp"));
+			.andExpect(view().name("compTest"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

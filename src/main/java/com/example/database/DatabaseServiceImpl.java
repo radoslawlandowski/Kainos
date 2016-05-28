@@ -25,13 +25,13 @@ public class DatabaseServiceImpl implements DatabaseService {
 	private static final String fileName = "data.csv";
 
 	@Autowired
-	private DatabaseConnector connector;
+	DatabaseConnector connector;
 	
 	@Autowired
-	private CSVExchangeExtruder extruder;
+	CSVExchangeExtruder extruder;
 	
 	@Autowired
-	private FormatTransformer transformer;
+	FormatTransformer transformer;
 	
 	private SQLRepository repo = null;
 	
@@ -83,7 +83,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 		try {
 			c = connector.connect();
 		} catch (SQLException e) {
-			logger.error("Can't connect to database", e);
+			logger.error("Can't connect to the database", e);
 		}
 		repo = new SQLRepository(c);
    	    repo.createTableInsideDatabaseRevisited();

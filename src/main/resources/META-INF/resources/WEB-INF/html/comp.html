@@ -6,12 +6,12 @@
 	<script src="js/chartLibs/RGraph.common.tooltips.js"></script>
 	<script src="js/chartLibs/RGraph.common.effects.js"></script>
 	<script src="js/chartLibs/RGraph.line.js"></script>
-	<!--<script src="js/dataExchange.js"></script>-->
 	<script src="js/CompareScript.js"></script>
 	<script src="js/generateChart.js"></script>
 	<script src="js/UtilsScript.js"></script>
 	
 <style>
+
 h2 {
 	border-style: ridge;
 }
@@ -22,8 +22,8 @@ form {
 
 table {
 	border-collapse: collapse;
-	width: 20%;
-	height: 100%;
+	width: 30%;
+	height: 200px;
 }
 
 th, td {
@@ -35,6 +35,7 @@ th, td {
 th {
 	background-color: #4CAF50;
 	color: white;
+	width: 150px;
 }
 
 tr:nth-child(even) {
@@ -43,6 +44,7 @@ tr:nth-child(even) {
 </style>
 
 </head>
+
 <body>
 
 	<h2>
@@ -60,7 +62,7 @@ tr:nth-child(even) {
 
 	<div id = "container" style = "width:100%">
     <div id ="left" style = "float:left; width: 25%;">
-		<table id="myTableCompared">
+		<table id="myTable">
     		<thead>
         		<tr>
             		<th>Date</th>
@@ -72,7 +74,7 @@ tr:nth-child(even) {
        	   </tbody>
 		</table>
     </div>
-    <div id = "middle" style = "float:right; width: 75%;">
+    <div id = "middle" style = "float:left; width: 75%;">
 		<canvas id="cvs" width="1000" height="600">	</canvas>
     </div>
 </div>

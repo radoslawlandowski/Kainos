@@ -25,7 +25,6 @@ function areDatesValid() {
 		result = true;
 	}
 	return result;
-	
 }
 
 
@@ -41,42 +40,16 @@ function dateChecker() {
 	}
 }
 
-function insertData(obj) {
-	for ( var i in obj) {
-		var id = obj[i].row[0];
-		var name = obj[i].row[1];
-		insertRow(id, name);
-	}
-}
-function insertRow(date, value) {
-	var table = document.getElementById("myTable");
-	var row = table.insertRow(1);
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-	cell1.innerHTML = date;
-	cell2.innerHTML = value;
-}
-
-function insertRowThree(date, value, deposit) {
-	var table = document.getElementById("myTableCompared");
-	var row = table.insertRow(1);
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-	var cell3 = row.insertCell(2);
-
-	cell1.innerHTML = date;
-	cell2.innerHTML = value;
-	cell3.innerHTML = deposit;
-}
-
 function insertDataArgumented(argum) {
 	var obj = argum;
 	var table = document.getElementById("myTable");
+	var row = [];
+	var cell = [];
 	for(var i = 0 ; i < obj.length; i++) {
-		var row = table.insertRow(1);
+		row[i] = table.insertRow(1);
 		for(var j = 0 ; j < obj[i].row.length ; j++) {
-			var cell = row.insertCell(j);
-			cell.innerHtml = obj[i].row[j];
+			cell[j] = row[i].insertCell(j);
+			cell[j].innerText = obj[i].row[j];
 		}
 	}
 }

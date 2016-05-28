@@ -13,7 +13,7 @@ function getData() {
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200) {
 			var obj = JSON.parse(xhttp.responseText);
-			insertData(obj);
+			insertDataArgumented(obj);
 			createChartNew(obj);
 		}
 	};
