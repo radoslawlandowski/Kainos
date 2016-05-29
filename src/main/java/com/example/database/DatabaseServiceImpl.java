@@ -38,6 +38,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	public DatabaseServiceImpl() {}
 	
+
+	public void setRepo(SQLRepository repo) {
+		this.repo = repo;
+	}
+	
 	@Override
 	public boolean isInitialized() {
 		boolean result = (repo != null);
