@@ -63,6 +63,7 @@ public class CSVExchangeExtruderTest {
 		assertEquals(expected, accuired);
 	} */
 	
+	@Ignore
 	@Test(expected = IllegalArgumentException.class)
 	public void extrudeExchangesWithIncorrectSeparator() {
 		String incorrectSeparatorFile = "/home/radek/Documents/newWorkspace/Kainos/src/test/resources/com.example.utils/forAppTestsSemicolon.csv";
