@@ -11,5 +11,4 @@ public interface DatabaseService {
 	void insertDataFromFile(String path);
 	List<Exchange> selectAll();
 	List<Exchange> selectWhereDate(Date startDate, Date endDate);
-	
 }

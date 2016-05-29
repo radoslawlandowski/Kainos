@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
- 
 	<script src="js/chartLibs/RGraph.common.core.js"></script>
 	<script src="js/chartLibs/RGraph.common.dynamic.js"></script>
 	<script src="js/chartLibs/RGraph.common.tooltips.js"></script>
@@ -11,7 +9,6 @@
 	<script src="js/CompareScript.js"></script>
 	<script src="js/generateChart.js"></script>
 	<script src="js/UtilsScript.js"></script>
-	
 <style>
  
 h2, h3 {
@@ -54,10 +51,10 @@ tr:nth-child(even) {
 	
 	<form
 		action="javascript:compare()">
-		Start date: <input type="date" name="bday" min="1998-01-05" max="2016-05-12" value="1998-01-05" id=startingDate><br>
-		End date: <input type="date" name="bday" min="1998-01-05" max="2016-05-12" value="2016-05-12" id=endingDate><br> 
-		Input: <input type="number" name="inputValue" id="inputValue" value="1000"><br>
-  		Deposit percentage: <input type="number" name="percentageValue" id="percentageValue" value="1"><br>
+		Start date: <input type="date" name="bday" id=startingDate><br>
+		End date: <input type="date" name="bday" id=endingDate><br> 
+		Input: <input type="number" name="inputValue" id="inputValue" min=0 ><br>
+  		Deposit percentage: <input type="number" name="percentageValue" id="percentageValue" step="0.01" min=0 ><br>
 		<input type="submit" value="Submit">
 	</form>
 

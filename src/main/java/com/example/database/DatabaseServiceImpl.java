@@ -40,12 +40,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	@Override
 	public boolean isInitialized() {
-		boolean result = repo != null;
-		if(repo == null) {
-			result = false;
-		} else {
-			result = true;
-		}
+		boolean result = (repo != null);
 		return result;
 	}
 
@@ -65,15 +60,13 @@ public class DatabaseServiceImpl implements DatabaseService {
 
 	@Override
 	public List<Exchange> selectAll() {
-		List<Exchange> result;
-		result = repo.selectRevisited();
+		List<Exchange> result = repo.selectRevisited();
 		return result;
 	}
 
 	@Override
 	public List<Exchange> selectWhereDate(Date startDate, Date endDate) {
-		List<Exchange> list;
-		list = repo.selectWhereDateMatchesRevisited(startDate, endDate);
+		List<Exchange> list = repo.selectWhereDateMatchesRevisited(startDate, endDate);
 		return list;
 	}
 
@@ -83,14 +76,12 @@ public class DatabaseServiceImpl implements DatabaseService {
 		Connection c = null;
 		try {
 			c = connector.connect();
+			repo = new SQLRepository(c);
+	   	    repo.createTableInsideDatabaseRevisited();
+	   	    this.insertDataFromFile(fileName);
+	   	    logger.info("DATABASE INITIALIZED POSTCONSTRUCT");
 		} catch (SQLException e) {
 			logger.error("Can't connect to the database", e);
 		}
-		repo = new SQLRepository(c);
-   	    repo.createTableInsideDatabaseRevisited();
-   	    this.insertDataFromFile(fileName);
-   	    logger.info("DATABASE INITIALIZED POSTCONSTRUCT");
-   	    
 	}
-	
 }

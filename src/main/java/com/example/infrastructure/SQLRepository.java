@@ -110,7 +110,6 @@ public class SQLRepository {
 			while (rs.next()) {
 				Date date = rs.getDate("mydate");
 				BigDecimal value = rs.getBigDecimal("val").setScale(2, RoundingMode.HALF_EVEN);
-				Object[] container = { date, value };
 				Exchange row = new Exchange(date, value);
 				rows.add(row);
 			}

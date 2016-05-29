@@ -36,6 +36,4 @@ public class Exchange {
 	public String toString() {
 		return "Exchange [date=" + date + ", value=" + value + "]";
 	}
-
-	
 }

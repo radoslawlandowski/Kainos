@@ -43,8 +43,7 @@ public class ApiControllerTest {
 		try {
 			trueDate = sdf.parse(date);
 		} catch (ParseException e) {
-			logger.error("The date cannot be parsed. Check your string format. [Should be: yyyy-MM-dd]");
-			e.printStackTrace();
+			logger.error("The date cannot be parsed. Check your string format. [Should be: yyyy-MM-dd]", e);
 		}
         java.sql.Date resultDate = new Date(trueDate.getTime()); 
         return resultDate;

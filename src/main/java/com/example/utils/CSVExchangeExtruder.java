@@ -65,8 +65,4 @@ public class CSVExchangeExtruder implements Iterator<Exchange> {
 			return ex;
 		}
 	}
-	
-
-
-
 }

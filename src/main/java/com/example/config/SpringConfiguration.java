@@ -32,6 +32,4 @@ public class SpringConfiguration {
 	public FormatTransformer FormatTransformer() {
 		return new FormatTransformer();
 	}
- 
- 
 }

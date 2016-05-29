@@ -1,4 +1,9 @@
     function createChartNew(obj) {
+    	
+     if (obj.length == 0) {
+    	 alert("No data to be displayed, check input dates");
+    	 return;
+     }
 	 var canvas = document.getElementById('cvs');
 	 canvas.width = canvas.width;
 	 RGraph.ObjectRegistry.clear();
@@ -24,6 +29,7 @@
 	 }
 	 
 	 var labels = [];
+	 
 	 var numberOfElements = separatedData[0].length;
 	 var factor = Math.floor(numberOfElements/10);
 	 for(i = 0 ; i < numberOfElements ; i++) { // get 10 labels regardless of the amount of data.

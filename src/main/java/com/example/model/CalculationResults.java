@@ -37,6 +37,4 @@ public class CalculationResults {
 	public void setDepositValue(BigDecimal depositValue) {
 		this.depositValue = depositValue;
 	}
-
-
 }
